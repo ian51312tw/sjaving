@@ -1,0 +1,48 @@
+@use 'reset' as *;
+@use 'variables' as *;
+
+#topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
+
+    .navDecorateBox {
+        flex: 1;
+    }
+
+    .logo {
+        display: flex;
+        justify-content: center;
+        flex: 1;
+        font-size: $font-size-xxl;
+        font-weight: bold;
+        font-family: $family-en;
+    }
+
+    .navbar {
+        flex: 1;
+
+        .menu {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+
+}
+
+
+.hamburger {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 10px;
+
+    @media (min-width:971px) {
+        display: none;
+    }
+}
