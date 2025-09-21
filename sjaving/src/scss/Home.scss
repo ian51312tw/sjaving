@@ -1,0 +1,284 @@
+@use '../scss/variables' as *; // 依你的實際路徑；有 _index.scss 更方便
+@use '../scss/reset' as *;
+
+/* --------------------------------------------------------
+   Page 基底（點狀背景 + 區塊留白）
+--------------------------------------------------------- */
+.page.home {
+    background:
+        radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.08) 1px, transparent 1px) 0 0 / 12px 12px;
+    min-height: 100vh;
+}
+
+.section {
+    padding-block: clamp(64px, 10vw, 160px);
+    padding-inline: clamp(16px, 6vw, 120px);
+}
+
+/* --------------------------------------------------------
+   共用：終端機卡片樣式（可複用）
+--------------------------------------------------------- */
+.terminal {
+    position: relative;
+    background: #111;
+    color: #e6e6e6;
+    border-radius: 16px;
+    padding: 16px 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: 14px;
+        width: 44px;
+        height: 10px;
+        background:
+            radial-gradient(circle, #ff5f56 5px, transparent 6px) 0 50% / 14px 10px no-repeat,
+            radial-gradient(circle, #ffbd2e 5px, transparent 6px) 14px 50% / 14px 10px no-repeat,
+            radial-gradient(circle, #27c93f 5px, transparent 6px) 28px 50% / 14px 10px no-repeat;
+    }
+
+    pre {
+        margin: 0;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+}
+
+/* --------------------------------------------------------
+   HERO 區
+--------------------------------------------------------- */
+.hero {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(24px, 4vw, 64px);
+
+    .hero-left {
+        flex: 1 1 520px;
+        min-width: 320px;
+
+        .hero-title {
+            font-family: $family-en;
+            font-size: clamp(36px, 6vw, 72px);
+            font-weight: 800;
+            letter-spacing: .02em;
+            margin: 0 0 24px;
+        }
+
+        .search {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 560px;
+            width: 100%;
+
+            input {
+                flex: 1 1 auto;
+                height: 44px;
+                padding: 0 12px;
+                border: 1px solid rgba(0, 0, 0, .15);
+                border-radius: 999px;
+                background: #fff;
+            }
+
+            button {
+                height: 44px;
+                min-width: 44px;
+                border-radius: 999px;
+                border: 1px solid rgba(0, 0, 0, .15);
+                background: #fff;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .hero-right {
+        flex: 0 0 clamp(320px, 36vw, 520px);
+        position: relative;
+
+        .bubbles {
+            position: absolute;
+            right: -8px;
+            top: -16px;
+            display: grid;
+            gap: 8px;
+
+            p {
+                background: #fff;
+                color: #222;
+                border: 1px solid rgba(0, 0, 0, .1);
+                padding: 8px 12px;
+                border-radius: 12px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+                margin: 0;
+            }
+        }
+    }
+
+    @media (max-width: 971px) {
+        flex-direction: column;
+
+        .hero-right {
+            order: -1;
+            align-self: flex-end;
+        }
+    }
+}
+
+/* --------------------------------------------------------
+   名詞釋義（深色區）
+--------------------------------------------------------- */
+.def-section {
+    background: #1f2a33;
+    color: #e9f0f3;
+    position: relative;
+    isolation: isolate;
+    /* 疊紋不影響內層事件 */
+
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            radial-gradient(circle at 1px 1px, rgba(255, 255, 255, .06) 1px, transparent 1px) 0 0 / 12px 12px;
+        pointer-events: none;
+    }
+
+    .def-wrap {
+        position: relative;
+        display: flex;
+        gap: clamp(24px, 4vw, 64px);
+    }
+
+    .def-left {
+        flex: 0 0 clamp(48px, 6vw, 96px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+
+        .vertical-title {
+            writing-mode: vertical-rl;
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 800;
+            letter-spacing: .1em;
+        }
+
+        .vertical-sub {
+            writing-mode: vertical-rl;
+            font-family: $family-en;
+            opacity: .8;
+            letter-spacing: .2em;
+        }
+    }
+
+    .def-main {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        gap: clamp(16px, 2vw, 32px);
+
+        .chat {
+            display: grid;
+            gap: 10px;
+
+            p {
+                margin: 0;
+                background: #0f1922;
+                color: #e9f0f3;
+                border: 1px solid rgba(255, 255, 255, .08);
+                padding: 8px 12px;
+                border-radius: 12px;
+            }
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .def-main {
+            flex-direction: row;
+        }
+
+        .def-main .terminal {
+            flex: 1 1 60%;
+        }
+
+        .def-main .chat {
+            flex: 1 1 40%;
+        }
+    }
+}
+
+/* --------------------------------------------------------
+   程式種類（卡片網格）
+--------------------------------------------------------- */
+.sec-title {
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 800;
+    margin: 0 0 24px;
+
+    span {
+        font-family: $family-en;
+        font-size: .6em;
+        margin-left: 8px;
+        opacity: .7;
+    }
+}
+
+.card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(16px, 2.4vw, 32px);
+}
+
+.card {
+    flex: 1 1 calc(50% - clamp(16px, 2.4vw, 32px));
+    /* 2 欄 */
+    min-width: 320px;
+    max-width: 560px;
+    @extend .terminal;
+
+    /* 重用終端機樣式 */
+    .card-title {
+        margin: 0 0 10px;
+        font-weight: 700;
+    }
+
+    .card-code {
+        margin: 0;
+        white-space: pre-wrap;
+    }
+
+    @media (max-width: 971px) {
+        flex-basis: 100%;
+    }
+}
+
+/* --------------------------------------------------------
+   程式練習
+--------------------------------------------------------- */
+.exercise .exercise-wrap {
+    display: flex;
+    gap: clamp(16px, 3vw, 48px);
+    align-items: flex-start;
+
+    .exercise-copy {
+        flex: 0 0 clamp(220px, 26vw, 320px);
+        display: grid;
+        gap: 8px;
+    }
+
+    .exercise-board {
+        flex: 1 1 auto;
+    }
+
+    .exercise-board .terminal {
+        min-height: 200px;
+    }
+}
+
+@media (max-width: 971px) {
+    .exercise .exercise-wrap {
+        flex-direction: column;
+    }
+}

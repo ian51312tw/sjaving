@@ -11,6 +11,8 @@
     align-items: center;
     justify-content: space-between;
     height: 80px;
+    background-color: $sec-yellow;
+    padding-inline: clamp(12px, 1vw, 32px);
 
     .navDecorateBox {
         flex: 1;
@@ -19,7 +21,7 @@
     .logo {
         display: flex;
         justify-content: center;
-        flex: 1;
+        flex: 0 auto;
         font-size: $font-size-xxl;
         font-weight: bold;
         font-family: $family-en;
@@ -28,14 +30,36 @@
     .navbar {
         flex: 1;
 
-        .menu {
+        .menuBox {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column; // margin-right: 5%;
+            padding: 0 3%;
+            white-space: nowrap;
+
+            .menu {
+                display: flex;
+                width: 80%;
+                justify-content: space-between;
+                align-self: center;
+                gap:clamp(10px,2vw,10px);
+
+                >li {
+                    flex: 1;
+                }
+            }
+
+            >span {
+                @media ($mediaLg) {
+                    display: none;
+                }
+            }
+
+            .navDec2 {
+                align-self: flex-end;
+            }
         }
     }
-
 }
-
 
 .hamburger {
     background-color: transparent;

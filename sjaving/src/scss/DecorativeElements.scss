@@ -1,0 +1,215 @@
+@use 'reset' as *;
+@use 'variables' as *;
+
+// 基礎裝飾容器
+.decorated-section {
+    position: relative;
+    margin: 40px 0;
+    
+    // 為所有絕對定位的裝飾元素提供基礎樣式
+    .section-tab,
+    .code-tag-decorator,
+    .css-decorator,
+    .emoticon-decorator {
+        position: absolute;
+        z-index: 10;
+        pointer-events: none; // 避免干擾正常點擊
+    }
+}
+
+// 分頁標籤樣式
+.section-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba($pri-white, 0.9);
+    border: 1px solid rgba($sec-black, 0.2);
+    border-radius: 6px 6px 0 0;
+    padding: 6px 12px;
+    font-family: $family-en;
+    font-size: $font-size-xs;
+    color: $sec-black;
+    box-shadow: 0 2px 4px rgba($sec-black, 0.1);
+    
+    &.top-left {
+        top: -30px;
+        left: 0;
+    }
+    
+    .tab-icon {
+        display: flex;
+        align-items: center;
+        color: $pri-blue;
+        
+        svg {
+            width: 14px;
+            height: 14px;
+        }
+    }
+    
+    .tab-filename {
+        font-weight: 500;
+        white-space: nowrap;
+    }
+}
+
+// 代碼標籤裝飾
+.code-tag-decorator {
+    background: rgba($sec-yellow, 0.9);
+    border: 1px solid rgba($sec-black, 0.2);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-family: $family-en;
+    font-size: $font-size-xs;
+    color: $sec-black;
+    font-weight: 500;
+    line-height: 1;
+    
+    &.top-left {
+        top: -20px;
+        left: 20px;
+    }
+    
+    &.top-left-code {
+        top: -50px;
+        left: 0;
+        background: rgba($pri-white, 0.95);
+        border: 2px solid $sec-black;
+        padding: 8px 12px;
+        font-size: $font-size-sm;
+    }
+    
+    &.top-right {
+        top: -20px;
+        right: 20px;
+        background: rgba($pri-blue, 0.1);
+        color: $pri-blue;
+        border-color: $pri-blue;
+    }
+    
+    &.bottom-right {
+        bottom: -25px;
+        right: 0;
+        background: rgba($pri-white, 0.95);
+        border: 1px solid $sec-black;
+    }
+    
+    .code-content {
+        font-family: 'Courier New', monospace;
+    }
+}
+
+// CSS 裝飾樣式
+.css-decorator {
+    top: 20px;
+    left: -150px;
+    background: rgba($pri-blue, 0.05);
+    border: 1px solid rgba($pri-blue, 0.2);
+    border-radius: 6px;
+    padding: 12px;
+    width: 140px;
+    font-family: 'Courier New', monospace;
+    font-size: $font-size-xs;
+    color: $pri-blue;
+    
+    @media ($mediaMd) {
+        display: none; // 在中等螢幕以下隱藏
+    }
+    
+    .css-selector {
+        font-weight: bold;
+        margin-bottom: 2px;
+        color: $sec-black;
+    }
+    
+    .css-property {
+        margin-left: 12px;
+        margin-bottom: 1px;
+        font-size: 10px;
+        color: $pri-blue;
+        
+        &:before {
+            content: '';
+            margin-right: 4px;
+        }
+    }
+}
+
+// 顏文字裝飾
+.emoticon-decorator {
+    background: rgba($pri-white, 0.9);
+    border: 1px solid rgba($sec-gray, 0.3);
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-family: $family-en;
+    color: $sec-black;
+    
+    &.top-right {
+        top: -15px;
+        right: 100px;
+    }
+    
+    .emoticon {
+        font-size: $font-size-sm;
+        font-weight: normal;
+    }
+}
+
+// 響應式調整
+@media ($mediaSm) {
+    .decorated-section {
+        .css-decorator {
+            display: none;
+        }
+        
+        .section-tab {
+            font-size: 10px;
+            padding: 4px 8px;
+            
+            .tab-icon svg {
+                width: 12px;
+                height: 12px;
+            }
+        }
+        
+        .code-tag-decorator {
+            font-size: 10px;
+            padding: 3px 6px;
+            
+            &.top-left-code {
+                font-size: 11px;
+                padding: 6px 8px;
+            }
+        }
+        
+        .emoticon-decorator {
+            font-size: $font-size-xs;
+            padding: 6px 12px;
+            
+            &.top-right {
+                right: 20px;
+            }
+        }
+    }
+}
+
+// 特殊位置調整 mixin
+@mixin decorative-position($top: auto, $right: auto, $bottom: auto, $left: auto) {
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+// 可自訂的裝飾元素位置
+.custom-decorated {
+    .section-tab.custom { 
+        @include decorative-position(-35px, auto, auto, 10px); 
+    }
+    .code-tag-decorator.custom { 
+        @include decorative-position(-25px, 30px, auto, auto); 
+    }
+    .emoticon-decorator.custom { 
+        @include decorative-position(-10px, 50px, auto, auto); 
+    }
+}
