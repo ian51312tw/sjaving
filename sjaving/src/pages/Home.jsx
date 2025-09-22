@@ -1,124 +1,153 @@
-import React from "react";
-import "../scss/Home.scss";
+import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
+import '../scss/Home.scss'
+import Typewriter from '../component/Typewriter'
 
-// --------------------------------------------------------
-// Home Page
-// --------------------------------------------------------
-export default function Home() {
+const Home = () => {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [activeMenuItem, setActiveMenuItem] = useState('名詞釋義')
+
+  const menuItems = [
+    { name: '名詞釋義', path: '/definition' },
+    { name: '程式種類', path: '/category' },
+    { name: '程式練習', path: '/exercise' },
+    { name: '關於我們', path: '/about' }
+  ]
+
+  useEffect(() => {
+    // 頁面載入動畫
+    const elements = document.querySelectorAll('.section')
+    elements.forEach((el, index) => {
+      el.style.opacity = '0'
+      el.style.transform = 'translateY(30px)'
+
+      setTimeout(() => {
+        el.style.transition = 'all 0.6s ease'
+        el.style.opacity = '1'
+        el.style.transform = 'translateY(0)'
+      }, index * 200)
+    })
+  }, [])
+
+  const handleSearch = () => {
+    const query = searchQuery.trim()
+    if (query) {
+      console.log(`搜尋查詢: ${query}`)
+      // 實作搜尋邏輯
+    }
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  }
+
+  const handleMenuClick = (item) => {
+    setActiveMenuItem(item.name)
+    console.log(`選擇了: ${item.name}`)
+  }
+
   return (
-    <main className="page home">
+    <div className="home-container">
+      {/* 區塊1: 主要內容區域 */}
+      <section className="section hero-section">
+        <div className="main-content">
+          <h1 className="main-title">Let's sJAVing!</h1>
 
-      {/* --------------------------------------------------------
-        HERO 區（標題 + 搜尋 + 右側終端卡 / 氣泡）
-      --------------------------------------------------------- */}
-      <section className="section hero">
-        <div className="hero-left">
-          <h1 className="hero-title">Let’s sJAVing!</h1>
-
-          <form className="search" onSubmit={(e) => e.preventDefault()}>
-            <input type="text" placeholder="今天想學什麼？" />
-            <button type="submit" aria-label="Search">🔍</button>
-          </form>
+          {/* 搜尋區域 */}
+          <div className="search-container">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="今天想學些什麼？"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={handleKeyPress}
+            />
+            <button className="search-button" onClick={handleSearch}>
+              開始搜尋
+            </button>
+          </div>
+        </div>
+        {/* 問候語區域 */}
+        <div className="greeting-section">
+          <div className='greeting'>
+            <span className='htmlDec1'>＜p style="color:blue"＞</span>
+            <p className="greeting-text">Hi！今天學什麼呢？</p>
+            <p className="sub-text">下方點擊開始！</p>
+            <span className='htmlDec2'>＜/p＞</span>
+            <p className='cutie1'>（ ´ ▽ ` ）ﾉ</p>
+          </div>
         </div>
 
-        <aside className="hero-right">
-          <div className="terminal">
-            <pre>
-              {`// 這裡可以放一小段示意程式碼
-const hello = (name) => \`Hi, \${name}!\`;
-console.log(hello("World"));`}
-            </pre>
-          </div>
 
-          <div className="bubbles">
-            <p>Hi！今天學什麼呢？</p>
-            <p>點右邊開始！</p>
-          </div>
-        </aside>
-      </section>
-
-      {/* --------------------------------------------------------
-         名詞釋義（深色區）
-      --------------------------------------------------------- */}
-      <section className="section def-section">
-        <div className="def-wrap">
-          <div className="def-left">
-            <div className="vertical-title">名詞釋義</div>
-            <div className="vertical-sub">Definition</div>
-          </div>
-
-          <div className="def-main">
-            <div className="terminal">
-              <pre>
-                {`變數 (Variable) vs. 常數 (Constant)
-let / const 的差別與使用時機...
-型別：Number / String / Boolean / null / undefined
-`}
-              </pre>
-            </div>
-
-            <div className="chat">
-              <p>資料型別有哪些？</p>
-              <p>函式(Function) 是怎麼運作的？</p>
-              <p>陣列(Array) 怎麼迭代？</p>
+        {/* 內容與導航區域 */}
+        <div className="content-nav-section">
+          {/* 左側內容區 */}
+          <div className="content-area">
+            <div className="title-block">
+              <p className='cssDec'>.bigTitle ｛display: flex; flex-direction: column; justify-content: center; align-items: flex-start;｝</p>
+              <h2 className="need-to">Need To</h2>
+              <h2 className="recall-memory"><Typewriter /></h2>
+              <h2 className="about-coding">About The Coding?</h2>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* --------------------------------------------------------
-        程式種類（卡片網格）
-      --------------------------------------------------------- */}
-      <section className="section cards">
-        <h2 className="sec-title">程式種類 <span>Category</span></h2>
-
-        <div className="card-grid">
-          <article className="card">
-            <h3 className="card-title">產生亂數</h3>
-            <pre className="card-code">{`// 使用 Math.random()
-const n = Math.floor(Math.random() * 100) + 1;`}</pre>
-          </article>
-
-          <article className="card">
-            <h3 className="card-title">產生樂透號碼</h3>
-            <pre className="card-code">{`// Set 去重 + 排序
-// [...new Set(...)]`}</pre>
-          </article>
-
-          <article className="card">
-            <h3 className="card-title">字元/字串</h3>
-            <pre className="card-code">{`// padStart / includes / slice`}</pre>
-          </article>
-
-          <article className="card">
-            <h3 className="card-title">流程控制</h3>
-            <pre className="card-code">{`if / else if / switch / 三元運算`}</pre>
-          </article>
-        </div>
-      </section>
-
-      {/* --------------------------------------------------------
-        程式練習（示意區）
-      --------------------------------------------------------- */}
-      <section className="section exercise">
-        <h2 className="sec-title">程式練習 <span>Exercise</span></h2>
-
-        <div className="exercise-wrap">
-          <div className="exercise-copy">
-            <p>我真的是合格的工程師了嗎？</p>
-            <p>GitHub 你又怎麼啦？</p>
-            <p>今天要練什麼？</p>
-          </div>
-
-          <div className="exercise-board">
-            <div className="terminal">
-              <pre>{`// 練習題載入區
-// (之後可接上你的互動題目)`}</pre>
+          {/* 右側終端機風格導航 */}
+          <nav className="nav-terminal">
+            <div className="terminal-header">
+              <div className="terminal-dots">
+                <span className="dot red"></span>
+                <span className="dot yellow"></span>
+                <span className="dot green"></span>
+              </div>
             </div>
-          </div>
+
+            <div className="terminal-menu">
+              {menuItems.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  className={`menu-item ${activeMenuItem === item.name ? 'active' : ''}`}
+                  onClick={() => handleMenuClick(item)}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </div>
+          </nav>
         </div>
       </section>
 
-    </main>
-  );
+      {/* 區塊2: 定義區域 */}
+      <section className="section definition-section">
+        <div className="definition-content">
+          <h2>名詞釋義</h2>
+          <p>Definition</p>
+          {/* 未來的定義內容 */}
+        </div>
+      </section>
+
+      {/* 區塊3: 程式種類區域 */}
+      <section className="section category-section">
+        <div className="category-content">
+          <h2>程式種類</h2>
+          <p className="category-subtitle">Category</p>
+          {/* 未來的程式種類內容 */}
+        </div>
+      </section>
+
+      {/* 區塊4: 程式練習區域 */}
+      <section className="section exercise-section">
+        <div className="exercise-content">
+          <h2>程式練習</h2>
+          <p className="exercise-subtitle">Exercise</p>
+          {/* 未來的程式練習內容 */}
+        </div>
+      </section>
+    </div>
+  )
 }
+
+export default Home

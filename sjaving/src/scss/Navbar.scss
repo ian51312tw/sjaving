@@ -6,7 +6,7 @@
     top: 0;
     left: 0;
     width: 100vw;
-    z-index: 999;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -30,21 +30,34 @@
     .navbar {
         flex: 1;
 
+
         .menuBox {
+            max-width: 640px;
+            // width: 80%;
+            // min-width: 420px;
             display: flex;
-            flex-direction: column; // margin-right: 5%;
+            flex-direction: column;
             padding: 0 3%;
             white-space: nowrap;
+            margin-left: auto;
+
+            @media ($mediaMd) {
+                display: none;
+            }
 
             .menu {
                 display: flex;
-                width: 80%;
                 justify-content: space-between;
                 align-self: center;
-                gap:clamp(10px,2vw,10px);
+                gap: clamp(10px, 2vw, 10px);
+
+                // @media ($mediaLg) {
+                //     flex-wrap: wrap;
+                // }
 
                 >li {
                     flex: 1;
+
                 }
             }
 
@@ -62,11 +75,54 @@
 }
 
 .hamburger {
-    background-color: transparent;
-    border: none;
-    margin-bottom: 10px;
-
     @media (min-width:971px) {
         display: none;
     }
+}
+
+@media ($mediaMd) {
+    .navbar {
+        display: flex;
+        align-items: center;
+    }
+
+    .hamburger {
+        background-color: transparent;
+        border: none;
+        margin-left: auto;
+        height: 40px;
+
+        @media (min-width:971px) {
+            display: none;
+        }
+
+        .bar {
+            display: block;
+            width: 24px;
+            height: 3px;
+            background-color: $pri-black;
+            margin: 5px auto;
+        }
+
+        &.is-active {
+            .bar {
+                &:nth-child(1) {
+                    transform: rotate(45deg) translate(5px, 6px);
+                }
+
+                &:nth-child(2) {
+                    opacity: 0;
+                }
+
+                &:nth-child(3) {
+                    transform: rotate(-45deg) translate(5px, -6px);
+                }
+            }
+        }
+    }
+
+    
+
+    
+
 }
