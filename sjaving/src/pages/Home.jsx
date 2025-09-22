@@ -8,10 +8,10 @@ const Home = () => {
   const [activeMenuItem, setActiveMenuItem] = useState('名詞釋義')
 
   const menuItems = [
-    { name: '名詞釋義', path: '/definition' },
-    { name: '程式種類', path: '/category' },
-    { name: '程式練習', path: '/exercise' },
-    { name: '關於我們', path: '/about' }
+    { name: '名詞釋義', path: '/#' },
+    { name: '程式種類', path: '/#' },
+    { name: '程式練習', path: '/#' },
+    { name: '關於我們', path: '/#' }
   ]
 
   useEffect(() => {

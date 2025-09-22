@@ -22,6 +22,8 @@
 
 // 主要英雄區域
 .hero-section {
+    height: 100%;
+    min-height: 900px;
 
     @media ($mediaMd) {
         height: 100%;
@@ -109,7 +111,7 @@
         .greeting {
             display: flex;
             flex-direction: column;
-            
+
 
             .greeting-text {
                 font-size: $font-size-xxl;
@@ -162,6 +164,10 @@
                 font-family: $family-en;
                 // font-weight: bold;
                 color: $sec-gray;
+
+                @media screen {
+                    
+                }
             }
 
             .need-to,
