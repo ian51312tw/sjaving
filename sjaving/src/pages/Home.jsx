@@ -166,14 +166,27 @@ const Home = () => {
                     <p>變數與常數用來儲存程式所需的資料
                     </p><br />
                     <p>變數儲存需進行「更新」的資訊，例如：使用者輸入、重複累加的數值...</p>
-                    <p>透過var、let進行宣告或賦值</p>
+                    <p>透過var、let進行宣告或賦值</p><br />
+                    <p>常數儲存須「鎖定不再更動」的資訊，例如：固定公式及函式、網址資訊...</p>
+                    <p>常數透過const進行宣告並且同時賦值</p><br />
+                  </div>
+                  <div className='greenText'>
+                    <p>// 就像裝資料的盒子</p>
+                    <p>// 變數盒子可以隨時放入或拿出資料</p>
+                    <p>// 常數盒子放入資料後就會鎖起來了！</p>
+                  </div>
+                  <div className='cutie2'>
+                    <p>（ • ̀ω  •́ ）</p>
                   </div>
                 </div>
               </div>
-
             </div>
-            <div className='sec2StartBtn'>
-
+            <div className='sec2BtnBox'>
+              <div className='sec2BtnArrow'>＞＞＞</div>
+              <div className='sec2StartBtn'>
+                <div className='btnUp'>開始學習</div>
+                <div className='btnDown'>Start</div>
+              </div>
             </div>
 
           </div>

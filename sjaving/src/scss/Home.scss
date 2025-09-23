@@ -327,6 +327,7 @@
             .sec2Terminal {
                 border-radius: 15px;
                 // width: 500px;
+                // min-width: 660px;
                 background: $pri-black;
                 border-radius: 15px;
                 border: 5px solid $pri-black;
@@ -396,25 +397,99 @@
                             align-items: flex-start;
                             margin: 0 clamp(1vw, 3vw, 3vw);
                             color: $pri-white;
+                            text-align: left;
+                        }
+
+                        .greenText {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            margin: 0 clamp(1vw, 3vw, 3vw);
+                            color: $txt-green;
+                            text-align: left;
+                        }
+
+                        .cutie2 {
+                            font-size: $font-size-ex;
+                            color: $pri-white;
+                            align-self: flex-end;
+                            margin-right: 2vw;
                         }
 
                     }
 
-                    .menu-item {
-                        display: block;
-                        padding: 15px 30px;
-                        color: $pri-white;
-                        font-family: $family-tc;
-                        font-size: $font-size-lg;
-                        text-decoration: none;
-                        transition: all 0.3s ease;
-                        border-left: 4px solid transparent;
-                    }
                 }
             }
 
-        }
+            .sec2BtnBox {
+                margin-top: clamp(2vh,7vh,7vh);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 2vw;
+                color: $pri-white;
+                font-size: $font-size-xxl;
+                font-family: $family-en;
 
+                .sec2BtnArrow {
+                    display: inline-block;
+                    animation: arrowBlink 1.2s ease-in-out infinite;
+                    will-change: transform, opacity;
+                }
+
+                @keyframes arrowBlink {
+                    0% {
+                        transform: translateX(0);
+                        opacity: .35;
+                    }
+
+                    50% {
+                        transform: translateX(4px);
+                        opacity: 1;
+                    }
+
+                    /* 3~5px 自己調 */
+                    100% {
+                        transform: translateX(0);
+                        opacity: .35;
+                    }
+                }
+
+                .sec2StartBtn {
+                    width: 50%;
+                    display: flex;
+                    flex-direction: column;
+                    align-self: center;
+                    cursor: pointer;
+
+
+                    .btnUp {
+                        border-bottom: 3px solid $pri-white;
+                        text-align: right;
+                        padding-right: 2vw;
+                    }
+
+                    .btnDown {
+                        text-align: left;
+                        padding-left: 2vw;
+                        transform: translateX(0);
+                        transition: transform .6s ease;
+                        /* 滑動動畫 */
+                    }
+
+                    &:hover .btnDown {
+                        transform: translateX(clamp(24px, 10vw, 200px));
+                    }
+
+                }
+            }
+
+            @media ($mediaMd) {
+                .sec2StartBtn {
+                    --slide: clamp(16px, 12vw, 120px);
+                }
+            }
+        }
     }
 }
 
