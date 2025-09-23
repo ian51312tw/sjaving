@@ -62,6 +62,7 @@
             }
 
             >span {
+                font-weight: bold;
                 @media ($mediaLg) {
                     display: none;
                 }

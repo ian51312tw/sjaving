@@ -102,10 +102,17 @@
     .greeting-section {
         display: flex;
         justify-content: flex-end;
-        margin-right: 15vw;
+        margin-right: clamp(5vw, 10vw, 15vw);
+
 
         @media ($mediaMd) {
             display: none;
+        }
+
+        .cutie1 {
+            font-size: $font-size-xxl;
+            align-content: flex-end;
+            font-weight: bold;
         }
 
         .greeting {
@@ -114,7 +121,7 @@
 
 
             .greeting-text {
-                font-size: $font-size-xxl;
+                font-size: $font-size-lg;
                 // font-weight: bold;
                 color: $pri-blue;
                 margin-bottom: 8px;
@@ -122,11 +129,16 @@
             }
 
             .sub-text {
-                font-size: $font-size-lg;
+                font-size: $font-size-xxl;
                 color: $pri-black;
                 font-weight: 500;
                 font-family: $family-tc;
             }
+
+            .htmlDec2 {
+                align-self: flex-end;
+            }
+
         }
     }
 
@@ -141,6 +153,7 @@
         @media ($mediaMd) {
             flex-direction: column;
             gap: 30px;
+            align-items: center;
         }
     }
 
@@ -149,11 +162,16 @@
         flex: 1;
         background: $pri-white;
         border-radius: 20px;
-        padding: 50px 40px;
+        min-width: 540px;
+        // padding: 50px 40px;
         // box-shadow: 0 10px 30px rgba($sec-black, 0.1);
 
+        @media ($mediaMd) {
+            min-width: 0;
+        }
+
         @media ($mediaSm) {
-            padding: 30px 20px;
+            padding: 0 20px;
         }
 
         .title-block {
@@ -165,9 +183,7 @@
                 // font-weight: bold;
                 color: $sec-gray;
 
-                @media screen {
-                    
-                }
+                @media screen {}
             }
 
             .need-to,
@@ -200,7 +216,8 @@
         width: 500px;
         background: $pri-black;
         border-radius: 15px;
-        box-shadow: 0 15px 35px rgba($sec-black, 0.2);
+        border: 5px solid $pri-black;
+        box-shadow: 0 15px 35px rgba($pri-black, 0.2);
         overflow: hidden;
 
         @media ($mediaMd) {
@@ -210,7 +227,7 @@
         }
 
         .terminal-header {
-            background: color.scale($pri-black, $lightness: -5%);
+            background: $pri-black;
             padding: 15px 20px;
             display: flex;
             align-items: center;
@@ -243,6 +260,9 @@
 
         .terminal-menu {
             padding: 20px 0;
+            border: 5px solid $sec-black;
+            background-color: $sec-black;
+            border-radius: 15px;
 
             .menu-item {
                 display: block;
@@ -272,15 +292,141 @@
     }
 }
 
+.definition-section {
+    .definition-content {
+
+        display: flex;
+
+        .leftChatScroller {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .homeTitleArea {
+            display: flex;
+            // flex: 1;
+            justify-content: center;
+
+            h2,
+            p {
+                writing-mode: vertical-rl;
+                letter-spacing: 20px;
+            }
+        }
+
+        .rightTerminalArea {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            margin: 0 3vw;
+            min-width: 400px;
+
+
+            .sec2Terminal {
+                border-radius: 15px;
+                // width: 500px;
+                background: $pri-black;
+                border-radius: 15px;
+                border: 5px solid $pri-black;
+                box-shadow: 0 15px 35px rgba($pri-black, 0.2);
+
+                .terminal-header {
+                    padding: 15px 20px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .terminal-dots {
+                        display: flex;
+                        gap: 8px;
+
+                        .dot {
+                            width: 12px;
+                            height: 12px;
+                            border-radius: 50%;
+
+                            &.red {
+                                background: #ff5f57;
+                            }
+
+                            &.yellow {
+                                background: #ffbd2e;
+                            }
+
+                            &.green {
+                                background: #28ca42;
+                            }
+                        }
+                    }
+
+                }
+
+                .terminal-textArea {
+                    padding: 20px 0;
+                    border: 5px solid $sec-black;
+                    background-color: $sec-black;
+                    border-radius: 15px;
+
+                    .sec2TerminalTitle {
+                        display: flex;
+                        flex-direction: column;
+
+
+                        h2 {
+                            color: $pri-white;
+                            margin: 0 clamp(1vw, 3vw, 3vw);
+                            font-size: $font-size-xxl;
+                            font-weight: bold;
+                            font-family: $family-en;
+                        }
+
+                        .titleUp {
+                            align-self: flex-start;
+                        }
+
+                        .titleDown {
+                            align-self: flex-end;
+                        }
+
+                        .terminalText {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            margin: 0 clamp(1vw, 3vw, 3vw);
+                            color: $pri-white;
+                        }
+
+                    }
+
+                    .menu-item {
+                        display: block;
+                        padding: 15px 30px;
+                        color: $pri-white;
+                        font-family: $family-tc;
+                        font-size: $font-size-lg;
+                        text-decoration: none;
+                        transition: all 0.3s ease;
+                        border-left: 4px solid transparent;
+                    }
+                }
+            }
+
+        }
+
+    }
+}
+
 // 其他區塊樣式
 .definition-section,
 .category-section,
 .exercise-section {
 
-
     .definition-content,
     .category-content,
     .exercise-content {
+
         height: 100%;
         background: $pri-blue;
         // border-radius: 20px;
@@ -292,19 +438,22 @@
             padding: 40px 20px;
         }
 
-        h2 {
-            font-size: clamp($font-size-xl, 6vw, $font-size-ex);
-            font-weight: bold;
-            color: $pri-white;
-            font-family: $family-tc;
-            margin-bottom: 20px;
-        }
+        .homeTitleArea {
+            h2 {
+                font-size: clamp($font-size-xl, 6vw, $font-size-ex);
+                font-weight: bold;
+                color: $pri-white;
+                font-family: $family-tc;
+                margin-bottom: 20px;
+            }
 
-        p {
-            font-size: $font-size-lg;
-            color: $sec-gray;
-            font-family: $family-en;
-            font-style: italic;
+            p {
+                font-size: $font-size-lg;
+                color: $sec-gray;
+                font-family: $family-en;
+                font-style: italic;
+                font-weight: bold;
+            }
         }
     }
 }
@@ -314,8 +463,10 @@
     .category-content {
         background: $pri-white;
 
-        h2 {
-            color: $pri-black;
+        .homeTitleArea {
+            h2 {
+                color: $pri-black;
+            }
         }
     }
 }

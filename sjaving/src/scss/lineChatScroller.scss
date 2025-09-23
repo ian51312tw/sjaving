@@ -1,0 +1,113 @@
+@use 'reset' as *;
+@use 'variables' as *;
+
+/* 主要容器：可捲動、隱藏滾動條、頂底漸層淡出 */
+.line-chat-wrap {
+  position: relative;
+  overflow-y: auto;
+  cursor: grab;
+  height: 80%;
+  padding: 8px 0;
+  scroll-behavior: auto; // 我們用 rAF 控制，不用 smooth
+
+  &.dragging {
+    cursor: grabbing;
+  }
+
+  /* 上下漸層：支援 WebKit 的遮罩（Chrome/Safari），讓頂底有淡出 */
+  -webkit-mask-image: linear-gradient(to bottom,
+    transparent 0px,
+    black 32px,
+    black calc(100% - 32px),
+    transparent 100%);
+  mask-image: linear-gradient(to bottom,
+    transparent 0px,
+    black 32px,
+    black calc(100% - 32px),
+    transparent 100%);
+
+  /* 可選：隱藏捲軸 */
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+}
+
+/* 列表與項目 */
+.line-chat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* 左側 LINE 風格氣泡 */
+.bubble {
+  max-width: 320px;
+  position: relative;
+  padding: 10px 12px;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+
+  p {
+    margin: 0;
+    line-height: 1.5;
+    padding: 5px 10px;
+    text-align: left;
+  }
+
+  &.left {
+    align-self: flex-start;
+    background: $sec-gray;
+    /* 灰色 */
+    color: $pri-white;
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: -15px;
+      bottom: 15px;
+      border: 20px solid transparent;
+      border-right-color: $sec-gray;
+      border-left: 0;
+      border-top: 0;
+    }
+  }
+
+  &.right {
+    align-self: flex-end;
+    background: #86d97b;
+    /* 綠色 */
+    color: $pri-black;
+
+    &::after {
+      content: "";
+      position: absolute;
+      right: -15px;
+      bottom: 15px;
+      border: 20px solid transparent;
+      border-left-color: #86d97b;
+      border-right: 0;
+      border-top: 0;
+    }
+  }
+}
+
+/* 新訊息「下方浮出」動畫（淡入 + 往上） */
+.item-enter {
+  animation: bubbleIn .3s ease both;
+}
+
+@keyframes bubbleIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
