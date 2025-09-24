@@ -4,15 +4,16 @@ import '../scss/Home.scss'
 import Typewriter from '../component/Typewriter'
 import LineChatScroller from '../component/lineChatScroller'
 
+
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeMenuItem, setActiveMenuItem] = useState('名詞釋義')
 
   const menuItems = [
-    { name: '名詞釋義', path: '/#' },
-    { name: '程式種類', path: '/#' },
-    { name: '程式練習', path: '/#' },
-    { name: '關於我們', path: '/#' }
+    { name: '名詞釋義', path: '/Definition' },
+    { name: '程式種類', path: '/Category' },
+    { name: '程式練習', path: '/Exercise' },
+    { name: '關於我們', path: '/About' }
   ]
 
   useEffect(() => {
@@ -63,10 +64,12 @@ const Home = () => {
   return (
     <div className="home-container">
       {/* 區塊1: 主要內容區域 */}
-      <section className="section hero-section">
+      <section className="section hero-section"
+        data-badge-label="Home.jsx"
+        data-badge-theme="light">
+
         <div className="main-content">
           <h1 className="main-title">Let's sJAVing!</h1>
-
           {/* 搜尋區域 */}
           <div className="search-container">
             <input
@@ -130,10 +133,17 @@ const Home = () => {
 
           </div>
         </div>
+
+        <div className='scrollDown'>
+          <div className='scrollBlank'></div>
+          <div className='scrollText'>Scroll＞</div>
+        </div>
       </section>
 
       {/* 區塊2: 定義區域 */}
-      <section className="section definition-section">
+      <section className="section definition-section"
+        data-badge-label="Definition.jsx"
+        data-badge-theme="dark">
         <div className="definition-content">
           <div className='leftChatScroller'>
             {/* 左半部的對話區 */}
@@ -176,12 +186,12 @@ const Home = () => {
                     <p>// 常數盒子放入資料後就會鎖起來了！</p>
                   </div>
                   <div className='cutie2'>
-                    <p>（ • ̀ω  •́ ）</p>
+                    <p>（ ˋ• ω  •́ ）</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className='sec2BtnBox'>
+            <div className='sec2BtnBox-1'>
               <div className='sec2BtnArrow'>＞＞＞</div>
               <div className='sec2StartBtn'>
                 <div className='btnUp'>開始學習</div>
@@ -195,7 +205,9 @@ const Home = () => {
       </section>
 
       {/* 區塊3: 程式種類區域 */}
-      <section className="section category-section">
+      <section className="section category-section"
+        data-badge-label="Category.jsx"
+        data-badge-theme="light">
         <div className="category-content">
           <div className='homeTitleArea'>
             <h2>程式種類</h2>
@@ -206,7 +218,9 @@ const Home = () => {
       </section>
 
       {/* 區塊4: 程式練習區域 */}
-      <section className="section exercise-section">
+      <section className="section exercise-section"
+        data-badge-label="Exercise.jsx"
+        data-badge-theme="dark">
         <div className="exercise-content">
           <div className='homeTitleArea'>
             <h2>程式練習</h2>

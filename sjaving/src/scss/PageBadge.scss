@@ -1,0 +1,46 @@
+@use '../scss/reset' as *;
+@use '../scss/variables' as *;
+
+.page-badge {
+    position: fixed;
+    left: var(--inset-x);
+    top: var(--top);
+    z-index: var(--z);
+    width: 200px;
+    height: 60px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    // border-radius: 12px;
+    // box-shadow: 0 6px 18px rgba(0, 0, 0, .15);
+    pointer-events: none; // 章不擋底下點擊
+
+    .badge-icon {
+        width: 36px;
+        height: 36px;
+        object-fit: contain;
+    }
+
+    .badge-label {
+        font: 600 18px/1.1 $family-en;
+        letter-spacing: .04em;
+        white-space: nowrap;
+    }
+
+    &.light {
+        background: $pri-white;
+        color: $pri-black;
+        // border: 1px solid rgba(0, 0, 0, .08);
+    }
+
+    &.dark {
+        background: $pri-blue;
+        color: $pri-white;
+        // border: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    @media ($mediaMd) {
+        display: none;
+    }
+}

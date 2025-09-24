@@ -1,11 +1,13 @@
 @use 'reset' as *;
 @use 'variables' as *;
+@use 'function' as *;
 @use "sass:color";
 
 .home-container {
     padding-top: 80px; // 預留導航欄空間
     min-height: 100vh;
     background-color: $pri-white;
+    background-image: url("images/indexArea1BG.png");
 }
 
 // 基礎區塊樣式
@@ -24,6 +26,9 @@
 .hero-section {
     height: 100%;
     min-height: 900px;
+    display: flex;
+    flex-direction: column;
+    // @include plus-pattern-bg(28px, $sec-gray, 0.16, 15%);
 
     @media ($mediaMd) {
         height: 100%;
@@ -32,17 +37,18 @@
     .main-content {
         max-width: 800px;
         margin: 0 auto;
-        padding-top: clamp(20px, 5vw, 60px);
+        padding-top: clamp(20px, 5vw, 30px);
         padding-left: clamp(12px, 3vw, 32px);
         padding-right: clamp(12px, 3vw, 32px);
         text-align: center;
+
 
         .main-title {
             font-family: $family-en;
             font-size: clamp($font-size-ex, 8vw, 5rem);
             font-weight: bold;
             color: $pri-black;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             text-shadow: 2px 2px 4px rgba($sec-black, 0.1);
             letter-spacing: -0.02em;
         }
@@ -102,6 +108,7 @@
     .greeting-section {
         display: flex;
         justify-content: flex-end;
+
         margin-right: clamp(5vw, 10vw, 15vw);
 
 
@@ -160,7 +167,7 @@
     // 左側內容區域
     .content-area {
         flex: 1;
-        background: $pri-white;
+        // background: $pri-white;
         border-radius: 20px;
         min-width: 540px;
         // padding: 50px 40px;
@@ -290,29 +297,96 @@
             }
         }
     }
+
+    .scrollDown {
+        display: flex;
+        justify-content: center;
+        min-height: 80px;
+        flex: 1;
+        text-align: center;
+
+        @media ($mediaMd) {
+            display: none;
+
+        }
+
+        .scrollBlank {
+            border-right: 1px solid $pri-black;
+            margin-left: 10vw;
+        }
+
+        .scrollText {
+            padding-bottom: 80px;
+            writing-mode: sideways-rl;
+            font-size: $font-size-xxl;
+            display: inline-block;
+            animation: scrollBlink 1.2s ease-in-out infinite;
+            will-change: transform, opacity;
+
+            @keyframes scrollBlink {
+                0% {
+                    transform: translateY(0);
+                    opacity: .35;
+                }
+
+                50% {
+                    transform: translateY(20px);
+                    opacity: 1;
+                }
+
+                /* 3~5px 自己調 */
+                100% {
+                    transform: translateY(0);
+                    opacity: .35;
+                }
+            }
+        }
+    }
 }
 
+
 .definition-section {
+    background-image: url("images/indexArea2BG.png");
+
     .definition-content {
 
         display: flex;
+
+        @media ($mediaMd) {
+            flex-direction: column;
+        }
 
         .leftChatScroller {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
+
+            @media ($mediaMd) {
+                height: 70%;
+                order: 2;
+            }
         }
 
         .homeTitleArea {
-            display: flex;
-            // flex: 1;
-            justify-content: center;
+            @media (min-width:971px) {
+                display: flex;
+                // flex: 1;
+                justify-content: center;
+
+            }
 
             h2,
             p {
                 writing-mode: vertical-rl;
                 letter-spacing: 20px;
+
+                @media ($mediaMd) {
+                    writing-mode: horizontal-tb;
+                    order: 1;
+                    letter-spacing: 10px;
+
+                }
             }
         }
 
@@ -323,6 +397,10 @@
             margin: 0 3vw;
             min-width: 400px;
 
+            @media ($mediaMd) {
+                order: 3;
+            }
+
 
             .sec2Terminal {
                 border-radius: 15px;
@@ -332,6 +410,10 @@
                 border-radius: 15px;
                 border: 5px solid $pri-black;
                 box-shadow: 0 15px 35px rgba($pri-black, 0.2);
+
+                @media ($mediaMd) {
+                    display: none;
+                }
 
                 .terminal-header {
                     padding: 15px 20px;
@@ -422,7 +504,7 @@
             }
 
             .sec2BtnBox {
-                margin-top: clamp(2vh,7vh,7vh);
+                margin-top: clamp(2vh, 7vh, 7vh);
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -430,6 +512,10 @@
                 color: $pri-white;
                 font-size: $font-size-xxl;
                 font-family: $family-en;
+
+                @media ($mediaMd) {
+                    margin-top: 2vh;                    
+                }
 
                 .sec2BtnArrow {
                     display: inline-block;
@@ -503,7 +589,7 @@
     .exercise-content {
 
         height: 100%;
-        background: $pri-blue;
+        // background: $pri-blue;
         // border-radius: 20px;
         padding: 60px 40px;
         box-shadow: 0 10px 30px rgba($sec-black, 0.1);
@@ -536,7 +622,9 @@
 // 特殊區塊顏色變化
 .category-section {
     .category-content {
-        background: $pri-white;
+        // background: $pri-white;
+        background-image: url("images/indexArea3BG.png");
+
 
         .homeTitleArea {
             h2 {
@@ -548,7 +636,9 @@
 
 .exercise-section {
     .exercise-content {
-        background: $pri-blue;
+        // background: $pri-blue;
+        background-image: url("images/indexArea4BG.png");
+
 
         h2 {
             color: $pri-white;

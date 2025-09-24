@@ -31,10 +31,10 @@ const Navbar = () => {
                     <div className='menuBox'>
                         <span className='navDec1'>＜nav＞</span>
                         <ul className='menu'>
-                            <li><Link to='/#'>＜名詞釋義＞</Link></li>
-                            <li><Link to='/#'>＜程式種類＞</Link></li>
-                            <li><Link to='/#'>＜程式練習＞</Link></li>
-                            <li><Link to='/#'>＜關於我們＞</Link></li>
+                            <li><Link to='/Definition'>＜名詞釋義＞</Link></li>
+                            <li><Link to='/Category'>＜程式種類＞</Link></li>
+                            <li><Link to='/Exercise'>＜程式練習＞</Link></li>
+                            <li><Link to='/About'>＜關於我們＞</Link></li>
                         </ul>
                         <span className='navDec2'>＜/nav＞</span>
                     </div>
