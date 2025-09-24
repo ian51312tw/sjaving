@@ -317,7 +317,7 @@
 
         .scrollText {
             padding-bottom: 80px;
-            writing-mode: sideways-rl;
+            writing-mode: vertical-rl;
             font-size: $font-size-xxl;
             display: inline-block;
             animation: scrollBlink 1.2s ease-in-out infinite;

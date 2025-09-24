@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import "../scss/PageBadge.scss";
 
-export default function PageBadge({
+const PageBadge = ({
     navHeight = 80,
     insetX = 80,
     offsetY = 60,
     zIndex = 900,
     icon = "/images/badge-icon.svg",      // ← 全站共用 icon
-}) {
+}) => {
     const [badge, setBadge] = useState({ label: "Home.jsx", theme: "light" });
     const lastSectionId = useRef(null);   // 用來避免不必要的 re-render
 
@@ -58,7 +58,7 @@ export default function PageBadge({
             window.removeEventListener("scroll", onScroll);
             window.removeEventListener("resize", onScroll);
         };
-    }, [navHeight]);
+    }, [navHeight])
 
     return (
         <div
@@ -74,3 +74,5 @@ export default function PageBadge({
         </div>
     );
 }
+
+export default PageBadge

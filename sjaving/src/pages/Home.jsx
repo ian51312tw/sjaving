@@ -191,7 +191,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className='sec2BtnBox-1'>
+            <div className='sec2BtnBox'>
               <div className='sec2BtnArrow'>＞＞＞</div>
               <div className='sec2StartBtn'>
                 <div className='btnUp'>開始學習</div>
