@@ -2,7 +2,7 @@
 @use "variables" as *;
 
 footer {
-    margin: 0;
+    margin-top: auto;
     padding: 0;
     overflow: visible;
     width: 100%;
@@ -14,7 +14,7 @@ footer {
 
     .footerMain {
 
-        padding: 0 40px;
+        padding: auto 40px;
         color: $pri-white;
         background: $pri-black;
         display: grid;

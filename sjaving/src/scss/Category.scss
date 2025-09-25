@@ -1,0 +1,39 @@
+@use 'reset' as *;
+@use 'variables' as *;
+
+.section-category {
+    position: relative;
+    // min-height: 100vh; // 減去navbar高度
+    height: calc(100vh - 68px);
+    /* 讓 section 填滿 page-viewport */
+    padding-bottom: 40px; // 給Footer留空間
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .unfinishImg {
+        display: flex;
+        justify-content: center;
+        margin-top: 10vh;
+        width: 80%;
+        height: 80%;
+
+        .unfinish {
+            height: 100%;
+            width: auto;
+        }
+    }
+}
+
+// 載入動畫
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

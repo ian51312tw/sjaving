@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import '../scss/_reset.scss'
 import '../scss/Navbar.scss'
+import PageBadge from "./PageBadge";
 
 import React from 'react'
 
@@ -17,6 +18,11 @@ const Navbar = () => {
     return (
         <div id='topbar'>
             <div className='navDecorateBox'></div>
+            <PageBadge navHeight={80}
+                insetX={80}
+                offsetY={60}
+                zIndex={900}
+                icon="images/sjavinglogo.png" />
             <div className="logo"><Link to='/'>sJAVing</Link></div>
             <div className="navbar">
                 <button

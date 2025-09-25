@@ -1,13 +1,11 @@
 @use 'reset' as *;
 @use 'variables' as *;
-@use 'function' as *;
 @use "sass:color";
 
 .home-container {
     padding-top: 80px; // 預留導航欄空間
     min-height: 100vh;
     background-color: $pri-white;
-    background-image: url("images/indexArea1BG.png");
 }
 
 // 基礎區塊樣式
@@ -28,7 +26,6 @@
     min-height: 900px;
     display: flex;
     flex-direction: column;
-    // @include plus-pattern-bg(28px, $sec-gray, 0.16, 15%);
 
     @media ($mediaMd) {
         height: 100%;
@@ -63,7 +60,6 @@
             .search-input {
                 width: clamp(280px, 50vw, 400px);
                 padding: 15px 20px;
-                // border: 2px solid rgba($pri-blue, 0.2);
                 border-radius: 30px 0 0 30px;
                 font-size: $font-size-md;
                 font-family: $family-tc;
@@ -78,7 +74,6 @@
 
                 &:focus {
                     border-color: $pri-blue;
-                    // box-shadow: 0 0 0 3px rgba($pri-blue, 0.1);
                 }
             }
 
@@ -86,7 +81,6 @@
                 height: 58px;
                 padding: 15px 20px;
                 background: $pri-blue;
-                // border: 2px solid $pri-blue;
                 border-radius: 0 30px 30px 0;
                 color: $pri-white;
                 font-weight: bold;
@@ -97,8 +91,7 @@
                 &:hover {
                     color: color.scale($pri-black, $lightness: -10%);
                     background: color.scale($sec-yellow, $lightness: -10%);
-                    // border-color: color.scale($pri-blue, $lightness: -10%);
-                    // transform: translate(color)
+
                 }
             }
         }
@@ -129,7 +122,6 @@
 
             .greeting-text {
                 font-size: $font-size-lg;
-                // font-weight: bold;
                 color: $pri-blue;
                 margin-bottom: 8px;
                 font-family: $family-tc;
@@ -167,11 +159,8 @@
     // 左側內容區域
     .content-area {
         flex: 1;
-        // background: $pri-white;
         border-radius: 20px;
         min-width: 540px;
-        // padding: 50px 40px;
-        // box-shadow: 0 10px 30px rgba($sec-black, 0.1);
 
         @media ($mediaMd) {
             min-width: 0;
@@ -185,9 +174,7 @@
             margin-left: clamp(3vw, 5vw, 8vw);
 
             .cssDec {
-                // font-style: italic;
                 font-family: $family-en;
-                // font-weight: bold;
                 color: $sec-gray;
 
                 @media screen {}
@@ -317,7 +304,7 @@
 
         .scrollText {
             padding-bottom: 80px;
-            writing-mode: vertical-rl;
+            writing-mode: sideways-rl;
             font-size: $font-size-xxl;
             display: inline-block;
             animation: scrollBlink 1.2s ease-in-out infinite;
@@ -346,7 +333,6 @@
 
 
 .definition-section {
-    background-image: url("images/indexArea2BG.png");
 
     .definition-content {
 
@@ -404,8 +390,6 @@
 
             .sec2Terminal {
                 border-radius: 15px;
-                // width: 500px;
-                // min-width: 660px;
                 background: $pri-black;
                 border-radius: 15px;
                 border: 5px solid $pri-black;
@@ -579,6 +563,451 @@
     }
 }
 
+.category-container {
+    padding-top: 80px;
+    min-height: 100vh;
+    background-color: $pri-white;
+}
+
+.category-section {
+    height: calc(100vh - 80px);
+    min-height: 900px;
+
+    @media ($mediaMd) {
+        height: auto;
+        min-height: 800px;
+    }
+
+    .category-content {
+        height: 100%;
+        padding: 60px 40px;
+        display: flex;
+        flex-direction: column;
+
+        @media ($mediaSm) {
+            padding: 40px 20px;
+        }
+
+        // 標題區域
+        .categoryTitleArea {
+            text-align: center;
+            margin-bottom: 60px;
+
+            @media ($mediaMd) {
+                margin-bottom: 40px;
+            }
+
+            h2 {
+                font-size: clamp($font-size-xl, 6vw, $font-size-ex);
+                font-weight: bold;
+                color: $pri-black;
+                font-family: $family-tc;
+                margin-bottom: 20px;
+            }
+
+            .category-subtitle {
+                font-size: $font-size-lg;
+                color: $sec-gray;
+                font-family: $family-en;
+                font-style: italic;
+                font-weight: bold;
+            }
+        }
+
+        // 主要內容區域
+        .mainCategoryBox {
+            display: grid;
+            grid-template-columns: 1fr 1fr 400px;
+            gap: 30px;
+            flex: 1;
+            align-items: start;
+
+            @media ($mediaMd) {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        // 左側區域
+        .leftCategoryArea {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+
+            @media ($mediaMd) {
+                order: 2;
+            }
+        }
+
+        // 右側區域
+        .rightCategoryArea {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            height: 100%;
+
+            @media ($mediaMd) {
+                order: 1;
+            }
+        }
+
+        // 文字說明區域
+        .categoryTextArea {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 20px 0;
+
+            @media ($mediaMd) {
+                order: 3;
+                height: auto;
+                align-items: center;
+            }
+
+            .categoryDecText {
+                text-align: left;
+                margin-bottom: 40px;
+
+                @media ($mediaMd) {
+                    text-align: center;
+                    margin-bottom: 30px;
+                }
+
+                .html-tag {
+                    font-family: $family-en;
+                    color: $sec-gray;
+                    font-size: $font-size-sm;
+                }
+
+                p {
+                    font-family: $family-tc;
+                    font-size: $font-size-lg;
+                    color: $pri-black;
+                    margin: 10px 0;
+                    line-height: 1.6;
+                }
+
+                .cute-face {
+                    font-size: $font-size-xxl;
+                    margin-top: 20px !important;
+                    text-align: center;
+                }
+            }
+
+            // 按鈕區域
+            .categoryBtnBox {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                justify-content: center;
+
+                .categoryBtnArrow {
+                    font-size: $font-size-xxl;
+                    color: $pri-black;
+                    font-family: $family-en;
+                    font-weight: bold;
+                    animation: arrowBlink 1.2s ease-in-out infinite;
+                }
+
+                @keyframes arrowBlink {
+                    0% {
+                        transform: translateX(0);
+                        opacity: .35;
+                    }
+                    50% {
+                        transform: translateX(4px);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateX(0);
+                        opacity: .35;
+                    }
+                }
+
+                .categoryStartBtn {
+                    display: flex;
+                    flex-direction: column;
+                    text-decoration: none;
+                    cursor: pointer;
+                    min-width: 150px;
+
+                    .btnUp {
+                        font-family: $family-tc;
+                        font-size: $font-size-lg;
+                        color: $pri-black;
+                        border-bottom: 3px solid $pri-black;
+                        text-align: right;
+                        padding-right: 20px;
+                        padding-bottom: 5px;
+                    }
+
+                    .btnDown {
+                        font-family: $family-en;
+                        font-size: $font-size-xxl;
+                        color: $pri-black;
+                        text-align: left;
+                        padding-left: 20px;
+                        padding-top: 5px;
+                        transform: translateX(0);
+                        transition: transform .6s ease;
+                    }
+
+                    &:hover .btnDown {
+                        transform: translateX(20px);
+                    }
+                }
+            }
+        }
+
+        // 通用終端機樣式
+        .categoryTerminal {
+            background: $pri-black;
+            border-radius: 15px;
+            border: 5px solid $pri-black;
+            box-shadow: 0 15px 35px rgba($pri-black, 0.2);
+            overflow: hidden;
+
+            .terminal-header {
+                background: $pri-black;
+                padding: 15px 20px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                .terminal-dots {
+                    display: flex;
+                    gap: 8px;
+
+                    .dot {
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+
+                        &.red { background: #ff5f57; }
+                        &.yellow { background: #ffbd2e; }
+                        &.green { background: #28ca42; }
+                    }
+                }
+
+                .terminal-title {
+                    color: $pri-white;
+                    font-family: $family-tc;
+                    font-size: $font-size-md;
+                    font-weight: bold;
+                }
+            }
+
+            .terminal-body {
+                background: $sec-black;
+                padding: 20px;
+                color: $pri-white;
+                font-family: $family-tc;
+            }
+        }
+
+        // 程式執行終端機
+        .program-terminal {
+            .terminal-body {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                min-height: 200px;
+
+                @media ($mediaMd) {
+                    flex-direction: column;
+                    gap: 20px;
+                }
+
+                .program-controls {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 15px;
+
+                    .control-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+
+                        input[type="checkbox"] {
+                            width: 16px;
+                            height: 16px;
+                            accent-color: $sec-yellow;
+                        }
+
+                        label {
+                            font-size: $font-size-md;
+                            color: $pri-white;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                .program-logo {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .logo-shape {
+                        font-size: 80px;
+                        color: $sec-yellow;
+                        font-weight: bold;
+                        transform: rotate(0deg);
+                        text-shadow: 0 0 20px rgba($sec-yellow, 0.3);
+                    }
+                }
+            }
+        }
+
+        // 輸入終端機
+        .input-terminal {
+            .terminal-body {
+                .input-section {
+                    margin-bottom: 20px;
+
+                    .input-prompt {
+                        color: $pri-white;
+                        margin-bottom: 10px;
+                        font-size: $font-size-md;
+                    }
+
+                    .terminal-input {
+                        width: 100%;
+                        padding: 10px;
+                        background: $pri-black;
+                        border: 2px solid $sec-gray;
+                        border-radius: 5px;
+                        color: $pri-white;
+                        font-family: $family-tc;
+                        font-size: $font-size-md;
+
+                        &::placeholder {
+                            color: $sec-gray;
+                        }
+
+                        &:focus {
+                            outline: none;
+                            border-color: $sec-yellow;
+                        }
+                    }
+                }
+
+                .icon-buttons {
+                    display: flex;
+                    gap: 10px;
+                    margin-bottom: 20px;
+                    flex-wrap: wrap;
+
+                    .icon-btn {
+                        background: $pri-black;
+                        border: 1px solid $sec-gray;
+                        border-radius: 5px;
+                        padding: 8px 12px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            background: $sec-gray;
+                            transform: translateY(-2px);
+                        }
+                    }
+                }
+
+                .star-pattern {
+                    font-family: $family-en;
+                    font-size: $font-size-md;
+                    line-height: 1.5;
+
+                    div {
+                        color: $pri-white;
+                        margin: 2px 0;
+
+                        &.highlight {
+                            color: $sec-yellow;
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 亂數生成終端機
+        .random-terminal {
+            .terminal-body {
+                .function-info {
+                    margin-bottom: 15px;
+
+                    .function-name {
+                        color: $txt-green;
+                        font-family: $family-en;
+                        font-size: $font-size-md;
+                    }
+                }
+
+                .description {
+                    margin-bottom: 20px;
+
+                    p {
+                        color: $pri-white;
+                        font-size: $font-size-md;
+                        line-height: 1.6;
+                    }
+                }
+
+                .requirements {
+                    p {
+                        color: $pri-white;
+                        font-size: $font-size-md;
+                        margin: 8px 0;
+                        line-height: 1.4;
+                    }
+                }
+            }
+        }
+
+        // 樂透號碼終端機
+        .lottery-terminal {
+            .terminal-body {
+                .lottery-buttons {
+                    display: flex;
+                    gap: 10px;
+                    margin-bottom: 20px;
+                    flex-wrap: wrap;
+
+                    .lottery-btn {
+                        background: $pri-white;
+                        color: $pri-black;
+                        border: none;
+                        border-radius: 20px;
+                        padding: 8px 16px;
+                        font-family: $family-tc;
+                        font-size: $font-size-sm;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            background: $sec-yellow;
+                            transform: translateY(-2px);
+                        }
+                    }
+                }
+
+                .lottery-results {
+                    p {
+                        color: $pri-white;
+                        font-size: $font-size-sm;
+                        margin: 8px 0;
+                        font-family: $family-en;
+                        line-height: 1.4;
+                    }
+                }
+            }
+        }
+    }
+}
+
 // 其他區塊樣式
 .definition-section,
 .category-section,
@@ -622,9 +1051,6 @@
 // 特殊區塊顏色變化
 .category-section {
     .category-content {
-        // background: $pri-white;
-        background-image: url("images/indexArea3BG.png");
-
 
         .homeTitleArea {
             h2 {
@@ -636,9 +1062,6 @@
 
 .exercise-section {
     .exercise-content {
-        // background: $pri-blue;
-        background-image: url("images/indexArea4BG.png");
-
 
         h2 {
             color: $pri-white;

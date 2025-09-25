@@ -1,0 +1,416 @@
+@use 'reset' as *;
+@use 'variables' as *;
+
+// 確保頁面整體佈局正確
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+// 外層section樣式 (配合navbar判定)
+.definition-section {
+    position: relative;
+    // min-height: 100vh; // 減去navbar高度
+    height: calc(100vh - 68px);
+    /* 讓 section 填滿 page-viewport */
+    padding-bottom: 40px; // 給Footer留空間
+}
+
+.definition-container {
+    padding-top: 120px; // navbar空間
+    display: flex;
+    height: 100%;
+    gap: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 200px); // 確保內容有足夠高度
+}
+
+// 左側選單
+.sidebar {
+    width: 280px;
+    background: rgba($sec-black, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    height: 100%;
+    overflow-y: auto;
+    position: sticky;
+    top: 120px;
+
+    // @media ($mediaMd) {
+    //     display: none;
+    // }
+
+    .search-box {
+        margin-bottom: 30px;
+
+        input {
+            width: 100%;
+            padding: 12px 16px;
+            background: $pri-black;
+            border: 1px solid $sec-gray;
+            border-radius: 8px;
+            color: $pri-white;
+            font-size: $font-size-sm;
+            font-family: $family-tc;
+
+            &::placeholder {
+                color: $sec-gray;
+            }
+
+            &:focus {
+                outline: none;
+                border-color: $sec-yellow;
+            }
+        }
+    }
+
+    .category-section {
+        margin-bottom: 25px;
+
+        .category-title {
+            color: $sec-yellow;
+            font-size: $font-size-sm;
+            font-family: $family-tc;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba($sec-yellow, 0.3);
+        }
+
+        .topic-list {
+            list-style: none;
+
+            .topic-item {
+                width: 100%;
+                padding: 8px 12px;
+                background: transparent;
+                border: none;
+                color: $sec-gray;
+                font-family: $family-tc;
+                font-size: $font-size-sm;
+                text-align: left;
+                cursor: pointer;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                margin-bottom: 2px;
+
+                &:hover {
+                    background: rgba($pri-blue, 0.3);
+                    color: $pri-white;
+                }
+
+                &.active {
+                    background: $sec-yellow;
+                    color: $pri-black;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+// 主要內容區域
+.main-content {
+    overflow-y: auto;
+    flex: 1;
+    padding: 20px 0;
+    border-radius: 20px;
+    // max-width: 900px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    .content-header {
+        text-align: center;
+        margin-bottom: 30px;
+
+        .main-title {
+            font-size: clamp($font-size-ex, 6vw, 4rem);
+            font-weight: bold;
+            color: $pri-white;
+            font-family: $family-tc;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: $font-size-xl;
+            color: $sec-yellow;
+            font-family: $family-en;
+            font-style: italic;
+        }
+    }
+
+    .difficulty-indicator {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+        gap: 10px;
+
+        .difficulty-label {
+            color: $pri-white;
+            font-family: $family-tc;
+            font-size: $font-size-md;
+        }
+
+        .stars {
+            display: flex;
+            gap: 4px;
+
+            .star-icon {
+                width: 24px; // 你需要的大小
+                height: auto;
+            }
+        }
+    }
+}
+
+// 終端機視窗樣式
+.terminal-window {
+    background: $sec-black;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 8px 25px rgba($pri-black, 0.3);
+
+    .terminal-header {
+        background: $pri-black;
+        padding: 15px 20px;
+        border-radius: 15px 15px 0 0;
+        display: flex;
+        align-items: center;
+
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+
+            .dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+
+                &.red {
+                    background: #ff5f57;
+                }
+
+                &.yellow {
+                    background: #ffbd2e;
+                }
+
+                &.green {
+                    background: #28ca42;
+                }
+            }
+        }
+    }
+
+    .terminal-content {
+        padding: 25px 30px;
+        color: $pri-white;
+        font-family: $family-tc;
+        line-height: 1.8;
+
+        h3 {
+            color: $sec-yellow;
+            font-size: $font-size-lg;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: $font-size-md;
+            margin-bottom: 12px;
+        }
+
+        ol {
+            padding-left: 20px;
+
+            li {
+                margin-bottom: 8px;
+                font-size: $font-size-sm;
+
+                &::marker {
+                    color: $sec-yellow;
+                }
+            }
+        }
+
+        /* 新增：rules + emoticon 並排靠右 */
+        .rules-emoticon-row {
+            display: flex;
+            justify-content: flex-end;
+            /* 整組靠右 */
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            /* 文字太長時允許換行 */
+            margin-top: 15px;
+        }
+
+        .rules-emoticon-row .rules-text {
+            margin: 0;
+            font-size: $font-size-md;
+            text-align: right;
+            /* 最後一行靠右 */
+            color: $pri-white;
+        }
+
+        .rules-emoticon-row .emoticon {
+            margin-top: 0;
+            /* 覆蓋原本的 margin-top */
+            font-size: $font-size-ex;
+            font-weight: bold;
+            color: $sec-yellow;
+            flex-shrink: 0;
+            /* 保證表情不會被擠壓 */
+        }
+
+        .emoticon {
+            text-align: right;
+            font-size: $font-size-ex;
+            font-weight: bold;
+            margin-top: 15px;
+            color: $sec-yellow;
+        }
+    }
+}
+
+// 程式碼區塊特殊樣式
+.code-block {
+    .code-content {
+        .code {
+            background: rgba($pri-black, 0.5);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 15px;
+            border-left: 4px solid $txt-green;
+
+            .code-line {
+                font-family: 'Courier New', monospace;
+                font-size: $font-size-sm;
+                color: $txt-green;
+                margin-bottom: 5px;
+
+                &:empty {
+                    margin-bottom: 10px;
+                }
+
+                // 註解樣式
+                &:nth-child(1),
+                &:nth-child(2),
+                &:nth-child(5),
+                &:nth-child(6) {
+                    color: $sec-gray;
+                }
+            }
+        }
+    }
+}
+
+// 備註區塊
+.note-block {
+    background: rgba($sec-yellow, 0.1);
+    border: 1px solid rgba($sec-yellow, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    p {
+        color: $pri-white;
+        font-family: $family-tc;
+        font-size: $font-size-md;
+        margin: 0;
+    }
+
+    .note-emoticon {
+        font-size: $font-size-xxl;
+        color: $sec-yellow;
+        padding-left: 30px;
+    }
+}
+
+// 載入動畫
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+// 響應式設計
+@media ($mediaMd) {
+    .definition-container {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .terminal-window {
+        .terminal-content {
+            padding: 20px;
+        }
+    }
+}
+
+@media ($mediaSm) {
+    .definition-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .main-content {
+        .content-header {
+            .main-title {
+                font-size: $font-size-ex;
+            }
+        }
+    }
+
+    .terminal-window {
+        .terminal-content {
+            padding: 15px;
+
+            h3 {
+                font-size: $font-size-md;
+            }
+
+            p,
+            ol li {
+                font-size: $font-size-sm;
+            }
+        }
+    }
+}
+
+// 滾動條樣式
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba($sec-gray, 0.1);
+    border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba($sec-yellow, 0.5);
+    border-radius: 3px;
+
+    &:hover {
+        background: rgba($sec-yellow, 0.7);
+    }
+}

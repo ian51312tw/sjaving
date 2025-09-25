@@ -1,13 +1,42 @@
-import { useState, useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import '../scss/Home.scss'
 import Typewriter from '../component/Typewriter'
 import LineChatScroller from '../component/lineChatScroller'
 
 
 const Home = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const els = document.querySelectorAll('.section');
+
+    // 重置為初始狀態（避免已是完成狀態）
+    els.forEach(el => {
+      el.style.transition = 'none';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+    });
+    // 強制回流
+    els.forEach(el => void el.offsetHeight);
+
+    // 啟動動畫
+    els.forEach((el, index) => {
+      setTimeout(() => {
+        el.style.transition = 'all 0.6s ease';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      }, index * 200);
+    });
+
+    return () => {
+      els.forEach(el => { el.style.transition = ''; });
+    };
+  }, [location.key]); // ← 切換路由就重跑
+
   const [searchQuery, setSearchQuery] = useState('')
   const [activeMenuItem, setActiveMenuItem] = useState('名詞釋義')
+  const navigate = useNavigate()
 
   const menuItems = [
     { name: '名詞釋義', path: '/Definition' },
@@ -16,30 +45,79 @@ const Home = () => {
     { name: '關於我們', path: '/About' }
   ]
 
-  useEffect(() => {
-    // 頁面載入動畫
-    const elements = document.querySelectorAll('.section')
-    elements.forEach((el, index) => {
-      el.style.opacity = '0'
-      el.style.transform = 'translateY(30px)'
+  // useEffect(() => {
+  //   // 頁面載入動畫
+  //   const elements = document.querySelectorAll('.section')
+  //   elements.forEach((el, index) => {
+  //     el.style.opacity = '0'
+  //     el.style.transform = 'translateY(30px)'
 
-      setTimeout(() => {
-        el.style.transition = 'all 0.6s ease'
-        el.style.opacity = '1'
-        el.style.transform = 'translateY(0)'
-      }, index * 200)
-    })
-  }, [])
+  //     setTimeout(() => {
+  //       el.style.transition = 'all 0.6s ease'
+  //       el.style.opacity = '1'
+  //       el.style.transform = 'translateY(0)'
+  //     }, index * 200)
+  //   })
+  // }, [])
+
+  const rawTopics = [
+    '識別字', '變數', '常數', '資料型別', '運算子',
+    '條件判斷', '迴圈', '跳出', '繼續',
+    '函式', '方法', '參數', '引數',
+  ]
+
+  const categoryOfTopic = {
+    '識別字': '基礎語法術語',
+    '變數': '基礎語法術語',
+    '常數': '基礎語法術語',
+    '資料型別': '基礎語法術語',
+    '運算子': '基礎語法術語',
+
+    '條件判斷': '流程控制',
+    '迴圈': '流程控制',
+    '跳出': '流程控制',
+    '繼續': '流程控制',
+
+    '函式': '函式與參數',
+    '方法': '函式與參數',
+    '參數': '函式與參數',
+    '引數': '函式與參數',
+  }
+
+  const knownCategories = Array.from(new Set(Object.values(categoryOfTopic))).concat(['其他'])
 
   const handleSearch = () => {
     const query = searchQuery.trim()
-    if (query) {
-      console.log(`搜尋查詢: ${query}`)
-      // 實作搜尋邏輯
+    if (!query) return
+
+    // 完整比對（全字一致）
+    const isTopic = rawTopics.includes(query)
+    const isCategory = knownCategories.includes(query)
+
+    if (isTopic) {
+      // 導向 Definition，並預選該 topic
+      navigate('/Definition', { state: { preselectTopic: query } })
+      return
     }
+
+    if (isCategory) {
+      // 找到該類別的第一個 topic（依 rawTopics 原始順序）
+      const firstOfCat = rawTopics.find(t => categoryOfTopic[t] === query) || null
+      if (firstOfCat) {
+        navigate('/Definition', { state: { preselectCategory: query } })
+        return
+      } else {
+        // 類別存在但目前沒有項目（極少見），也視為查無可跳
+        alert('無此分類，請重新輸入完整查詢內容')
+        return
+      }
+    }
+
+    // 都不是 → 提示
+    alert('無此分類，請重新輸入完整查詢內容')
   }
 
-  const handleKeyPress = (e) => {
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleSearch()
     }
@@ -47,7 +125,6 @@ const Home = () => {
 
   const handleMenuClick = (item) => {
     setActiveMenuItem(item.name)
-    console.log(`選擇了: ${item.name}`)
   }
 
   const msgs = [
@@ -62,7 +139,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="home-container">
+    <div className="home-container"
+      style={{ backgroundImage: 'url("images/indexarea1bg.png")' }}
+    >
       {/* 區塊1: 主要內容區域 */}
       <section className="section hero-section"
         data-badge-label="Home.jsx"
@@ -78,7 +157,7 @@ const Home = () => {
               placeholder="今天想學些什麼？"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyDown}   // ← 改這裡
             />
             <button className="search-button" onClick={handleSearch}>
               開始搜尋
@@ -143,14 +222,16 @@ const Home = () => {
       {/* 區塊2: 定義區域 */}
       <section className="section definition-section"
         data-badge-label="Definition.jsx"
-        data-badge-theme="dark">
+        data-badge-theme="dark"
+        style={{ backgroundImage: 'url("images/indexarea2bg.png")' }}
+      >
         <div className="definition-content">
           <div className='leftChatScroller'>
             {/* 左半部的對話區 */}
             <LineChatScroller
               messages={msgs}
               height={360}         // 依設計稿調
-              pxPerSecond={40}     // 捲動速度
+              pxPerSecond={40}     // 滾動速度
               pauseMsAtEnd={5000}  // 底部停 5 秒
             />
           </div>
@@ -177,7 +258,7 @@ const Home = () => {
                     </p><br />
                     <p>變數儲存需進行「更新」的資訊，例如：使用者輸入、重複累加的數值...</p>
                     <p>透過var、let進行宣告或賦值</p><br />
-                    <p>常數儲存須「鎖定不再更動」的資訊，例如：固定公式及函式、網址資訊...</p>
+                    <p>常數儲存需「鎖定不再更動」的資訊，例如：固定公式及函式、網址資訊...</p>
                     <p>常數透過const進行宣告並且同時賦值</p><br />
                   </div>
                   <div className='greenText'>
@@ -191,13 +272,15 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            <div className='sec2BtnBox'>
-              <div className='sec2BtnArrow'>＞＞＞</div>
-              <div className='sec2StartBtn'>
-                <div className='btnUp'>開始學習</div>
-                <div className='btnDown'>Start</div>
+            <Link to='/Definition'>
+              <div className='sec2BtnBox'>
+                <div className='sec2BtnArrow'>＞＞＞</div>
+                <div className='sec2StartBtn'>
+                  <div className='btnUp'>開始學習</div>
+                  <div className='btnDown'>Start</div>
+                </div>
               </div>
-            </div>
+            </Link>
 
           </div>
           {/* 未來的定義內容 */}
@@ -207,12 +290,148 @@ const Home = () => {
       {/* 區塊3: 程式種類區域 */}
       <section className="section category-section"
         data-badge-label="Category.jsx"
-        data-badge-theme="light">
+        data-badge-theme="light"
+        style={{ backgroundImage: 'url("images/indexarea3bg.png")' }}
+      >
         <div className="category-content">
           <div className='homeTitleArea'>
             <h2>程式種類</h2>
             <p className="category-subtitle">Category</p>
-            {/* 未來的程式種類內容 */}
+          </div>
+          <div className='mainCategorybox'>
+            <div className='leftCategory'>
+              {/* 第一個終端機 - 程式執行區 */}
+              <div className='sec3LeftTerminal1 categoryTerminal program-terminal'>
+                <div className="terminal-header">
+                  <div className="terminal-dots">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                  </div>
+                </div>
+                <div className='terminal-body'>
+                  <div className='program-controls'>
+                    <div className='control-item'>
+                      <input type="checkbox" id="start" />
+                      <label htmlFor="start">開始疊韓</label>
+                    </div>
+                    <div className='control-item'>
+                      <input type="checkbox" id="process" />
+                      <label htmlFor="process">處理克運</label>
+                    </div>
+                    <div className='control-item'>
+                      <input type="checkbox" id="release" />
+                      <label htmlFor="release">放大</label>
+                    </div>
+                  </div>
+                  <div className='program-logo'>
+                    <div className='logo-shape'>▶</div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* 第二個終端機 - 輸入區 */}
+              <div className='sec3LeftTerminal2 categoryTerminal input-terminal'>
+                <div className="terminal-header">
+                  <div className="terminal-dots">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                  </div>
+                </div>
+                <div className='terminal-body'>
+                  <div className='input-section'>
+                    <p className='input-prompt'>請輸入星星行數：</p>
+                    <input type="text" className='terminal-input' placeholder="乙個整數" />
+                  </div>
+                  <div className='icon-buttons'>
+                    <button className='icon-btn'>📁</button>
+                    <button className='icon-btn'>📂</button>
+                    <button className='icon-btn'>🔖</button>
+                    <button className='icon-btn'>⚙️</button>
+                    <button className='icon-btn'>🔗</button>
+                    <button className='icon-btn'>⚡</button>
+                  </div>
+                  <div className='star-pattern'>
+                    <div>*</div>
+                    <div>* *</div>
+                    <div>* * *</div>
+                    <div>* * * *</div>
+                    <div>* * * * *</div>
+                    <div className='highlight'>&gt; * * * * * *</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className='rightCategory'>
+              {/* 產生亂數終端機 */}
+              <div className='sec3RightTerminal1 categoryTerminal random-terminal'>
+                <div className="terminal-header">
+                  <div className="terminal-dots">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                  </div>
+                  <div className='terminal-title'>產生亂數</div>
+                </div>
+                <div className='terminal-body'>
+                  <div className='function-info'>
+                    <p className='function-name'>函數：Math.random</p>
+                  </div>
+                  <div className='description'>
+                    <p>請使用亂數產生一個值(1-100)</p>
+                  </div>
+                  <div className='requirements'>
+                    <p>是否含對：</p>
+                    <p>猜測次數：</p>
+                    <p>答案為：</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* 產生樂透號碼終端機 */}
+              <div className='sec3RightTerminal2 categoryTerminal lottery-terminal'>
+                <div className="terminal-header">
+                  <div className="terminal-dots">
+                    <span className="dot red"></span>
+                    <span className="dot yellow"></span>
+                    <span className="dot green"></span>
+                  </div>
+                  <div className='terminal-title'>產生樂透號碼</div>
+                </div>
+                <div className='terminal-body'>
+                  <div className='lottery-buttons'>
+                    <button className='lottery-btn'>威力彩</button>
+                    <button className='lottery-btn'>大樂透</button>
+                    <button className='lottery-btn'>今彩539</button>
+                  </div>
+                  <div className='lottery-results'>
+                    <p>排序前號碼:27,3,32,19,12,6</p>
+                    <p>排序後號碼:3,6,12,19,27,32</p>
+                    <p>第二區號碼:1</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className='categoryRightArea'>
+              <div className='categoryDecText'>
+                <span className='html-tag'>&lt;p style="color:blue;"&gt;</span>
+                <p>這些真的都是入門的程式嗎...？快來查查怎麼做！</p>
+                <span className='html-tag'>&lt;/p&gt;</span>
+                <p className='cute-face'>(ᵔ̯ᵔ｡)</p>
+              </div>
+              <Link to='/Category'>
+                <div className='sec3BtnBox'>
+                  <div className='sec3BtnArrow'>＞＞＞</div>
+                  <div className='sec3StartBtn'>
+                    <div className='btnUp'>開始學習</div>
+                    <div className='btnDown'>Start</div>
+                  </div>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -220,7 +439,9 @@ const Home = () => {
       {/* 區塊4: 程式練習區域 */}
       <section className="section exercise-section"
         data-badge-label="Exercise.jsx"
-        data-badge-theme="dark">
+        data-badge-theme="dark"
+        style={{ backgroundImage: 'url("images/indexarea4bg.png")' }}
+      >
         <div className="exercise-content">
           <div className='homeTitleArea'>
             <h2>程式練習</h2>
