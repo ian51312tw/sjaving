@@ -45,21 +45,6 @@ const Home = () => {
     { name: '關於我們', path: '/About' }
   ]
 
-  // useEffect(() => {
-  //   // 頁面載入動畫
-  //   const elements = document.querySelectorAll('.section')
-  //   elements.forEach((el, index) => {
-  //     el.style.opacity = '0'
-  //     el.style.transform = 'translateY(30px)'
-
-  //     setTimeout(() => {
-  //       el.style.transition = 'all 0.6s ease'
-  //       el.style.opacity = '1'
-  //       el.style.transform = 'translateY(0)'
-  //     }, index * 200)
-  //   })
-  // }, [])
-
   const rawTopics = [
     '識別字', '變數', '常數', '資料型別', '運算子',
     '條件判斷', '迴圈', '跳出', '繼續',
@@ -137,6 +122,27 @@ const Home = () => {
     "別擔心，現在開始使用sJAVing吧！這就是專門為我們這些程式新鮮人所設計的中文化入門網站哦！簡單的查詢系統跟生活化的程式語言說明，一定能幫到你！",
     "哇！真的有這麼方便的網站嗎？那我趕快來試用看看！"
   ];
+
+  // 旋轉終端機
+  const [spin, setSpin] = useState(true);   // 預設勾選「開始旋轉」
+  const [fast, setFast] = useState(false);
+  const [zoom, setZoom] = useState(false);
+
+  // 星星終端機
+  const [starInput, setStarInput] = useState("");
+  const [starRows, setStarRows] = useState([]);
+
+  const handleStarKeyDown = (e) => {
+    if (e.key !== "Enter") return;
+    const n = parseInt(starInput, 10);
+    if (Number.isInteger(n) && n >= 1 && n <= 7) {
+      // 生成等腰三角形（左對齊版本，若要置中可改）
+      const lines = Array.from({ length: n }, (_, i) => "*".repeat(i + 1));
+      setStarRows(lines);
+    } else {
+      alert("請輸入 1~7 之間的整數");
+    }
+  };
 
   return (
     <div className="home-container"
@@ -299,9 +305,10 @@ const Home = () => {
             <p className="category-subtitle">Category</p>
           </div>
           <div className='mainCategorybox'>
-            <div className='leftCategory'>
-              {/* 第一個終端機 - 程式執行區 */}
-              <div className='sec3LeftTerminal1 categoryTerminal program-terminal'>
+            {/* 左欄：兩個終端機 */}
+            <div className='leftCol'>
+              {/* 左上：旋轉控制 */}
+              <div className='categoryTerminal program-terminal'>
                 <div className="terminal-header">
                   <div className="terminal-dots">
                     <span className="dot red"></span>
@@ -311,27 +318,36 @@ const Home = () => {
                 </div>
                 <div className='terminal-body'>
                   <div className='program-controls'>
-                    <div className='control-item'>
-                      <input type="checkbox" id="start" />
-                      <label htmlFor="start">開始疊韓</label>
-                    </div>
-                    <div className='control-item'>
-                      <input type="checkbox" id="process" />
-                      <label htmlFor="process">處理克運</label>
-                    </div>
-                    <div className='control-item'>
-                      <input type="checkbox" id="release" />
-                      <label htmlFor="release">放大</label>
-                    </div>
+                    <label className='control-item'>
+                      <input type="checkbox" checked={spin} onChange={e => setSpin(e.target.checked)} />
+                      開始旋轉
+                    </label>
+                    <label className='control-item'>
+                      <input type="checkbox" checked={fast} onChange={e => setFast(e.target.checked)} />
+                      旋轉加速
+                    </label>
+                    <label className='control-item'>
+                      <input type="checkbox" checked={zoom} onChange={e => setZoom(e.target.checked)} />
+                      放大
+                    </label>
                   </div>
-                  <div className='program-logo'>
-                    <div className='logo-shape'>▶</div>
-                  </div>
+
+                  {/* 旋轉的 PNG；請把 triangle.png 放在 public/images/ 之下 */}
+                  <img
+                    src="images/triangle.png"
+                    alt="triangle"
+                    className={[
+                      "triangle-img",
+                      spin ? "running" : "",
+                      fast ? "fast" : "",
+                      zoom ? "zoom" : "",
+                    ].join(" ")}
+                  />
                 </div>
               </div>
-              
-              {/* 第二個終端機 - 輸入區 */}
-              <div className='sec3LeftTerminal2 categoryTerminal input-terminal'>
+
+              {/* 左下：星星行數輸入 */}
+              <div className='categoryTerminal input-terminal'>
                 <div className="terminal-header">
                   <div className="terminal-dots">
                     <span className="dot red"></span>
@@ -340,87 +356,72 @@ const Home = () => {
                   </div>
                 </div>
                 <div className='terminal-body'>
-                  <div className='input-section'>
-                    <p className='input-prompt'>請輸入星星行數：</p>
-                    <input type="text" className='terminal-input' placeholder="乙個整數" />
+                  <div className='input-row'>
+                    <p className='input-label'>請輸入星星行數：</p>
+                    <input
+                      type="text"
+                      className='terminal-input'
+                      placeholder="輸入 1~7 之間整數，按 Enter"
+                      value={starInput}
+                      onChange={(e) => setStarInput(e.target.value)}
+                      onKeyDown={handleStarKeyDown}
+                    />
                   </div>
+
+                  {/* 小圖示只是裝飾，可換成 /images/terminalicon1.png /images/terminalicon2.png */}
                   <div className='icon-buttons'>
-                    <button className='icon-btn'>📁</button>
-                    <button className='icon-btn'>📂</button>
-                    <button className='icon-btn'>🔖</button>
-                    <button className='icon-btn'>⚙️</button>
-                    <button className='icon-btn'>🔗</button>
-                    <button className='icon-btn'>⚡</button>
+                    <img src="images/terminalicon1.png" alt="" className="icon" />
+                    <img src="images/terminalicon2.png" alt="" className="icon" />
                   </div>
-                  <div className='star-pattern'>
-                    <div>*</div>
-                    <div>* *</div>
-                    <div>* * *</div>
-                    <div>* * * *</div>
-                    <div>* * * * *</div>
-                    <div className='highlight'>&gt; * * * * * *</div>
+
+                  <div className='console'>
+                    {starRows.length === 0 ? (
+                      <div className='console-placeholder'>＞（尚未輸入）</div>
+                    ) : (
+                      starRows.map((line, idx) => (
+                        <div key={idx} className={idx === starRows.length - 1 ? "highlight" : ""}>
+                          {idx === starRows.length - 1 ? "> " : ""}
+                          {line}
+                        </div>
+                      ))
+                    )}
                   </div>
                 </div>
               </div>
             </div>
-            
-            <div className='rightCategory'>
-              {/* 產生亂數終端機 */}
-              <div className='sec3RightTerminal1 categoryTerminal random-terminal'>
+
+            {/* 中欄：先留兩個容器位置（你說之後再做） */}
+            <div className='midCol'>
+              <div className='categoryTerminal placeholder-terminal'>
                 <div className="terminal-header">
                   <div className="terminal-dots">
                     <span className="dot red"></span>
                     <span className="dot yellow"></span>
                     <span className="dot green"></span>
                   </div>
-                  <div className='terminal-title'>產生亂數</div>
                 </div>
-                <div className='terminal-body'>
-                  <div className='function-info'>
-                    <p className='function-name'>函數：Math.random</p>
-                  </div>
-                  <div className='description'>
-                    <p>請使用亂數產生一個值(1-100)</p>
-                  </div>
-                  <div className='requirements'>
-                    <p>是否含對：</p>
-                    <p>猜測次數：</p>
-                    <p>答案為：</p>
-                  </div>
-                </div>
+                <div className='terminal-body'>（之後放內容 A）</div>
               </div>
-              
-              {/* 產生樂透號碼終端機 */}
-              <div className='sec3RightTerminal2 categoryTerminal lottery-terminal'>
+
+              <div className='categoryTerminal placeholder-terminal'>
                 <div className="terminal-header">
                   <div className="terminal-dots">
                     <span className="dot red"></span>
                     <span className="dot yellow"></span>
                     <span className="dot green"></span>
                   </div>
-                  <div className='terminal-title'>產生樂透號碼</div>
                 </div>
-                <div className='terminal-body'>
-                  <div className='lottery-buttons'>
-                    <button className='lottery-btn'>威力彩</button>
-                    <button className='lottery-btn'>大樂透</button>
-                    <button className='lottery-btn'>今彩539</button>
-                  </div>
-                  <div className='lottery-results'>
-                    <p>排序前號碼:27,3,32,19,12,6</p>
-                    <p>排序後號碼:3,6,12,19,27,32</p>
-                    <p>第二區號碼:1</p>
-                  </div>
-                </div>
+                <div className='terminal-body'>（之後放內容 B）</div>
               </div>
             </div>
-            
-            <div className='categoryRightArea'>
+
+            {/* 右欄：你的文案 + 按鈕（沿用原本） */}
+            <div className='rightCol'>
               <div className='categoryDecText'>
-                <span className='html-tag'>&lt;p style="color:blue;"&gt;</span>
+                <span className='html-tag'>＜p style="color:blue;"＞</span>
                 <p>這些真的都是入門的程式嗎...？快來查查怎麼做！</p>
-                <span className='html-tag'>&lt;/p&gt;</span>
-                <p className='cute-face'>(ᵔ̯ᵔ｡)</p>
+                <span className='html-tag'>＜/p＞</span>
+                <p className='cute-face'>（Ó_Ò｡）</p>
               </div>
               <Link to='/Category'>
                 <div className='sec3BtnBox'>
