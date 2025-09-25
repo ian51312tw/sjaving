@@ -438,16 +438,52 @@ const Home = () => {
       </section>
 
       {/* 區塊4: 程式練習區域 */}
-      <section className="section exercise-section"
+      <section
+        className="section exercise-section"
         data-badge-label="Exercise.jsx"
         data-badge-theme="dark"
         style={{ backgroundImage: 'url("images/indexarea4bg.png")' }}
       >
         <div className="exercise-content">
-          <div className='homeTitleArea'>
+          <div className="homeTitleArea">
             <h2>程式練習</h2>
             <p className="exercise-subtitle">Exercise</p>
-            {/* 未來的程式練習內容 */}
+          </div>
+
+          <div className="exercise-main">
+            {/* 左：想法（上）＋ 貓（下） */}
+            <div className="exercise-left">
+              <div className="thoughts">
+                <div className="thought-lines">
+                  {/* 由外到內、最短句放中間（可依設計再微調順序） */}
+                  <span>Github你又怎麼啦？</span>
+                  <span>不要再改了！</span>
+                  <span>好想睡覺</span>
+                  <span>他剛說啥？</span>
+                  <span>晚餐吃什麼？</span>
+                  <span>我真的有學會嗎？</span>
+                  <span>我真的是合格的工程師了嗎？</span>
+                </div>
+
+                {/* 貓固定在 thoughts 容器底部 */}
+                <img className="exercise-cat" src="images/cutecat-2.png" alt="cute cat" />
+              </div>
+            </div>
+
+            {/* 右：錯誤堆疊 + CTA */}
+            <div className="exercise-right">
+              <div className="error-stack">
+                <img src="images/warning4.png" alt="warning stack" />
+              </div>
+
+              <Link to="/Exercise" className="sec4BtnBox">
+                <div className="sec4BtnArrow">＞＞＞</div>
+                <div className="sec4StartBtn">
+                  <div className="btnUp">開始測驗</div>
+                  <div className="btnDown">Start</div>
+                </div>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

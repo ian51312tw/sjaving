@@ -1246,20 +1246,175 @@
     }
 }
 
-/* RWD：依你現有斷點可改為 $mediaMd/$mediaSm */
-@media (max-width: 1100px) {
-    .category-content .mainCategorybox {
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .rightCol {
-        grid-column: 1 / -1;
+.exercise-section {
+    .exercise-content {
+        .exercise-main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            /* 左右兩欄 */
+            align-items: center;
+            gap: clamp(24px, 5vw, 64px);
+            width: min(1200px, 92vw);
+            margin: 0 auto;
+        }
     }
 }
 
-@media (max-width: 780px) {
-    .category-content .mainCategorybox {
-        grid-template-columns: 1fr;
+/* 左側：想法（上） + 貓（下） */
+.exercise-left {
+    display: flex;
+    justify-content: center;
+
+    .thoughts {
+        /* 讓「上方文字」與「下方貓」成上下排列，
+       並且整塊有固定可縮放高度，貓會靠底對齊 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: clamp(360px, 46vh, 560px);
+        position: relative;
+
+        .thought-lines {
+            /* 文字橫向排列，直書，齊頭（上緣） */
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            /* 齊頭 */
+            justify-content: center;
+            gap: clamp(10px, 2vw, 28px);
+            transform: translateY(0);
+            /* 視覺微調可改這裡 */
+
+            span {
+                writing-mode: vertical-rl;
+                text-orientation: mixed;
+                white-space: nowrap;
+                line-height: 1.6;
+                font-family: $family-tc;
+                font-size: clamp(16px, 1.6vw, 22px);
+                color: rgba($pri-white, .92);
+                letter-spacing: 1px;
+                /* 可依句長做些許上邊距微調（選擇性）
+        &:nth-child(4) { margin-top: -6px; }
+        */
+            }
+        }
+
+        .exercise-cat {
+            width: clamp(320px, 38vw, 620px);
+            /* 放大貓 */
+            height: auto;
+            margin-top: auto;
+            /* 關鍵：把貓推到 thoughts 底部 */
+            pointer-events: none;
+            user-select: none;
+        }
+
+        /* 額頭小轉圈（要就留） */
+        .cat-spinner {
+            position: absolute;
+            top: clamp(110px, 22vh, 160px);
+            left: clamp(140px, 20vw, 280px);
+            width: clamp(36px, 5vw, 60px);
+            height: clamp(36px, 5vw, 60px);
+            border-radius: 50%;
+            background:
+                conic-gradient(from 0deg, rgba(255, 255, 255, .9) 0 20%, transparent 20% 100%);
+            -webkit-mask: radial-gradient(circle 60% at 50% 50%, transparent 58%, #000 60%);
+            mask: radial-gradient(circle 60% at 50% 50%, transparent 58%, #000 60%);
+            animation: spin 1.4s linear infinite;
+
+            &:hover {
+                animation-play-state: paused;
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 右側：錯誤堆疊與 CTA */
+.exercise-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(16px, 3vh, 28px);
+
+    .error-stack img {
+        width: clamp(360px, 42vw, 640px);
+        /* 放大警告圖 */
+        height: auto;
+        display: block;
+        filter: drop-shadow(0 8px 18px rgba(0, 0, 0, .35));
+    }
+}
+
+/* ========= 讓 sec4 按鈕「完全照抄 sec3」：只改 3 -> 4 & 文案 ========= */
+.sec4BtnBox {
+    margin-top: clamp(2vh, 7vh, 7vh);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+    color: $pri-white;
+    font-size: $font-size-xxl;
+    font-family: $family-en;
+
+    @media ($mediaMd) {
+        margin-top: 2vh;
+    }
+
+    .sec4BtnArrow {
+        display: inline-block;
+        animation: arrowBlink 1.2s ease-in-out infinite;
+        will-change: transform, opacity;
+    }
+
+    .sec4StartBtn {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-self: center;
+        cursor: pointer;
+
+        .btnUp {
+            border-bottom: 3px solid $pri-white;
+            text-align: right;
+            padding-right: 2vw;
+        }
+
+        .btnDown {
+            text-align: left;
+            padding-left: 2vw;
+            transform: translateX(0);
+            transition: transform .6s ease;
+        }
+
+        &:hover .btnDown {
+            transform: translateX(clamp(24px, 10vw, 200px));
+        }
+    }
+}
+
+@keyframes arrowBlink {
+    0% {
+        transform: translateX(0);
+        opacity: .35;
+    }
+
+    50% {
+        transform: translateX(4px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: .35;
     }
 }
 
@@ -1276,7 +1431,7 @@
         // background: $pri-blue;
         // border-radius: 20px;
         padding: 60px 40px;
-        box-shadow: 0 10px 30px rgba($sec-black, 0.1);
+        // box-shadow: 0 10px 30px rgba($sec-black, 0.1);
         text-align: center;
 
         @media ($mediaSm) {
