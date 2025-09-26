@@ -35,7 +35,7 @@ body {
     background: rgba($sec-black, 0.9);
     border-radius: 15px;
     padding: 20px;
-    height: 100%;
+    // height: 100%;
     overflow-y: auto;
     position: sticky;
     top: 120px;
@@ -333,6 +333,11 @@ body {
         color: $sec-yellow;
         padding-left: 30px;
     }
+}
+
+.sidebar .category-section {
+    height: auto !important;
+    min-height: auto !important;
 }
 
 // 載入動畫

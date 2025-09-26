@@ -589,9 +589,6 @@
         }
 
         // 標題區域
-        .categoryTitleArea {
-            text-align: center;
-            margin-bottom: 60px;
 
             @media ($mediaMd) {
                 margin-bottom: 40px;
@@ -611,7 +608,7 @@
                 font-family: $family-en;
                 font-style: italic;
                 font-weight: bold;
-            }
+            
         }
 
         // 主要內容區域
@@ -848,6 +845,7 @@
 
         // 輸入終端機
         .input-terminal {
+            height: 80%;
             .terminal-body {
                 .input-section {
                     margin-bottom: 20px;
@@ -1164,6 +1162,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 5vh;
 
     .categoryDecText {
         margin-bottom: 20px;
@@ -1247,8 +1246,15 @@
 }
 
 .exercise-section {
+    height: auto;
+    min-height: calc(100vh - 80px);
+
     .exercise-content {
+        height: auto;
+        min-height: inherit;
+
         .exercise-main {
+
             display: grid;
             grid-template-columns: 1fr 1fr;
             /* 左右兩欄 */
@@ -1301,7 +1307,8 @@
         }
 
         .exercise-cat {
-            width: clamp(320px, 38vw, 620px);
+            max-width: min(620px, 80vw);
+            width: clamp(320px, 24vw, 620px);
             /* 放大貓 */
             height: auto;
             margin-top: auto;
@@ -1309,31 +1316,6 @@
             pointer-events: none;
             user-select: none;
         }
-
-        /* 額頭小轉圈（要就留） */
-        .cat-spinner {
-            position: absolute;
-            top: clamp(110px, 22vh, 160px);
-            left: clamp(140px, 20vw, 280px);
-            width: clamp(36px, 5vw, 60px);
-            height: clamp(36px, 5vw, 60px);
-            border-radius: 50%;
-            background:
-                conic-gradient(from 0deg, rgba(255, 255, 255, .9) 0 20%, transparent 20% 100%);
-            -webkit-mask: radial-gradient(circle 60% at 50% 50%, transparent 58%, #000 60%);
-            mask: radial-gradient(circle 60% at 50% 50%, transparent 58%, #000 60%);
-            animation: spin 1.4s linear infinite;
-
-            &:hover {
-                animation-play-state: paused;
-            }
-        }
-    }
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
     }
 }
 
@@ -1420,11 +1402,11 @@
 
 // 其他區塊樣式
 .definition-section,
-.category-section,
+
 .exercise-section {
 
     .definition-content,
-    .category-content,
+
     .exercise-content {
 
         height: 100%;
@@ -1459,12 +1441,28 @@
 }
 
 // 特殊區塊顏色變化
-.category-section {
+.section.category-section {
     .category-content {
 
         .homeTitleArea {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
             h2 {
+                font-size: clamp($font-size-xl, 6vw, $font-size-ex);
+                font-weight: bold;
                 color: $pri-black;
+                font-family: $family-tc;
+                margin-bottom: 20px;
+            }
+
+            p {
+                font-size: $font-size-lg;
+                color: $sec-gray;
+                font-family: $family-en;
+                font-style: italic;
+                font-weight: bold;
             }
         }
     }

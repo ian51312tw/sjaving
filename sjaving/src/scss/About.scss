@@ -1,0 +1,75 @@
+@use 'reset' as *;
+@use 'variables' as *;
+
+.section-About {
+    position: relative;
+    // min-height: 100vh; // 減去navbar高度
+    height: calc(100vh - 68px);
+    /* 讓 section 填滿 page-viewport */
+    padding-bottom: 40px; // 給Footer留空間
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .about-content {
+
+        .homeTitleArea {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            h2 {
+                font-size: clamp($font-size-xl, 6vw, $font-size-ex);
+                font-weight: bold;
+                color: $pri-black;
+                font-family: $family-tc;
+                margin-bottom: 20px;
+            }
+
+            p {
+
+                font-size: $font-size-lg;
+                color: $sec-gray;
+                font-family: $family-en;
+                font-style: italic;
+                font-weight: bold;
+            }
+        }
+
+        .aboutContentBox {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: $font-size-xl;
+
+            .aboutImgBox {
+                display: flex;
+                align-content: center;
+                justify-content: center;
+                gap: 3vw;
+
+                .aboutQRcode {
+                    width: 300px;
+                    height: auto;
+                }
+                // .willSmith {
+                //     width: 300px;
+                //     height: auto;
+                // }
+            }
+        }
+    }
+}
+
+// 載入動畫
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

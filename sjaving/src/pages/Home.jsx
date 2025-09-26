@@ -135,12 +135,12 @@ const Home = () => {
   const handleStarKeyDown = (e) => {
     if (e.key !== "Enter") return;
     const n = parseInt(starInput, 10);
-    if (Number.isInteger(n) && n >= 1 && n <= 7) {
+    if (Number.isInteger(n) && n >= 1 && n <= 5) {
       // 生成等腰三角形（左對齊版本，若要置中可改）
       const lines = Array.from({ length: n }, (_, i) => "*".repeat(i + 1));
       setStarRows(lines);
     } else {
-      alert("請輸入 1~7 之間的整數");
+      alert("請輸入 1~5 之間的整數");
     }
   };
 
@@ -361,7 +361,7 @@ const Home = () => {
                     <input
                       type="text"
                       className='terminal-input'
-                      placeholder="輸入 1~7 之間整數，按 Enter"
+                      placeholder="輸入 1~5 之間整數，按 Enter"
                       value={starInput}
                       onChange={(e) => setStarInput(e.target.value)}
                       onKeyDown={handleStarKeyDown}
@@ -400,7 +400,7 @@ const Home = () => {
                     <span className="dot green"></span>
                   </div>
                 </div>
-                <div className='terminal-body'>（之後放內容 A）</div>
+                <div className='terminal-body'>（此區塊施工中O_Q）</div>
               </div>
 
               <div className='categoryTerminal placeholder-terminal'>
@@ -411,7 +411,7 @@ const Home = () => {
                     <span className="dot green"></span>
                   </div>
                 </div>
-                <div className='terminal-body'>（之後放內容 B）</div>
+                <div className='terminal-body'>（此區塊施工中O_Q）</div>
               </div>
             </div>
 
